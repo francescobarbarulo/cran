@@ -1,0 +1,3 @@
+package cran;
+
+@license(LGPL);
