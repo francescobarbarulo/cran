@@ -17,7 +17,19 @@ package cran;
 
 simple As
 {
-    //parameters:
+    parameters:
+        //N is the number of RRHs
+        int N = default(5);
+        //if enableCompression is true the message will be decompressed by the RRH
+        bool enableCompression = default(false);
+        //if expSize is true the size distribution is exponential otherwise is lognormal
+        bool expSize = default(true);
+        //size mean
+        double pktSize = default(1000);
+        //size variance 
+        double varSize = default(3);
+        //mean interArrivalTime between packets to the AS
+        double interArrivalTime @unit(ms) = default(100ms);
     gates:
         output out;
 }

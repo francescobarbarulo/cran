@@ -9,11 +9,15 @@
 #define AS_H_
 
 #include <omnetpp.h>
+#include "cranMessage.h"
 
 using namespace omnetpp;
 
 class As : public cSimpleModule
 {
+  private:
+    cMessage *beep;
+    cranMessage *pkt;
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);

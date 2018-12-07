@@ -25,6 +25,7 @@ import cran.Rrh;
 network CRan
 {
     parameters:
+    	//N is the number of RRHs
         int N = default(5);
         @display("bgb=441,247");
     submodules:
@@ -35,7 +36,7 @@ network CRan
             @display("p=181,109");
         }
         rrh[N]: Rrh {
-            @display("p=300,50,m,1,8");
+            @display("p=300,30,m,1,3");
         }
     connections:
         as.out --> {  delay = 100ms; } --> bbu.in;
