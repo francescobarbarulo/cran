@@ -1,6 +1,6 @@
 ../out/clang-debug/src/As.o: As.cc As.h \
-  /Users/Francesco/omnetpp-5.4.1/include/omnetpp.h
+  C:/Users/Gerardo/Desktop/omnet-5.4.1/include\omnetpp.h
 
 As.h:
 
-/Users/Francesco/omnetpp-5.4.1/include/omnetpp.h:
+C:/Users/Gerardo/Desktop/omnet-5.4.1/include\omnetpp.h:
