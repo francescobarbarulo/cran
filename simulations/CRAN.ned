@@ -39,8 +39,8 @@ network CRan
             @display("p=300,30,m,1,3");
         }
     connections:
-        as.out --> {  delay = 100ms; } --> bbu.in;
+        as.out --> {  delay = 10ms; } --> bbu.in;
         for i=0..N-1 {
-            bbu.out++ --> {  delay = 100ms; } --> rrh[i].in;
+            bbu.out++ --> {  delay = 10ms; } --> rrh[i].in;
         }
 }

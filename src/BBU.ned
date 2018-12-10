@@ -17,7 +17,8 @@ package cran;
 
 simple Bbu
 {
-    //parameters:
+    parameters:
+        double speed = default(12000);
     gates:
         input in;
         output out[];
