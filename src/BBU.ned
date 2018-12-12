@@ -19,6 +19,8 @@ simple Bbu
 {
     parameters:
         double speed = default(12000);
+        bool enableCompression = default(false);
+        double compressionPercentage = default(10);
     gates:
         input in;
         output out[];

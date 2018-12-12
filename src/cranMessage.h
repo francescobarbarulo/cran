@@ -17,6 +17,7 @@ class cranMessage : public cMessage
     int getSize();
     int getDest();
     bool isCompressed();
+    void compressPkt(double percentage);
 };
 
 #endif /* CRANMESSAGE_H_ */

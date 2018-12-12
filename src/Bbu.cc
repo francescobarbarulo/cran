@@ -33,6 +33,10 @@ void Bbu::handleMessage(cMessage *msg)
 }
 
 void Bbu::beginTransmission(cranMessage *pkt){
+    // case compression enabled
+    if (par("enableCompression").boolValue())
+        pkt->compressPkt(par("compressionPercentage").doubleValue());
+
     send(pkt, "out", pkt->getDest());
     simtime_t transmissionTime = pkt->getSize()/par("speed").doubleValue();
     EV<<"[BBU] TransmissionTime: "<<transmissionTime<< " - to: "<<pkt->getDest()<<endl;

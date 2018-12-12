@@ -14,3 +14,9 @@ int cranMessage::getDest(){
 bool cranMessage::isCompressed(){
     return this->compression;
 }
+
+void cranMessage::compressPkt(double percentage){
+    this->size = this->size * ((100 - percentage)/100) + 1;
+    this->compression = true;
+    EV << "compressed packet size: " << this->size << endl;
+}
