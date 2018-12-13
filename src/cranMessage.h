@@ -12,11 +12,14 @@ class cranMessage : public cMessage
     int size;
     int dest;
     bool compression;
+    int id;
+
   public:
-    cranMessage(int s, int d, bool c);
+    cranMessage(int id, int s, int d, bool c);
     int getSize();
     int getDest();
     bool isCompressed();
+    int getId();
     void compressPkt(double percentage);
 };
 

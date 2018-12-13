@@ -17,7 +17,8 @@ package cran;
 
 simple Rrh
 {
-    //parameters:
+   	parameters:
+   	    int compressionPercentage = default(10);
     gates:
         input in;
 }

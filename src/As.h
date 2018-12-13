@@ -18,6 +18,7 @@ class As : public cSimpleModule
   private:
     cMessage *beep;
     cranMessage *pkt;
+    int counter;
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);

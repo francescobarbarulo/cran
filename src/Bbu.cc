@@ -12,6 +12,10 @@ void Bbu::handleMessage(cMessage *msg)
 {
     if(msg->isSelfMessage()){
         buffer.erase(buffer.begin());
+        for(int i=0; i<buffer.size(); i++){
+            EV<<"Buffer["<<i<<"]: "<<buffer[i]->getId()<<endl;
+        }
+
         // BBU checks if there are other packet to be transmitted
         if(buffer.size() == 0)
             working = false;
@@ -39,6 +43,6 @@ void Bbu::beginTransmission(cranMessage *pkt){
 
     send(pkt, "out", pkt->getDest());
     simtime_t transmissionTime = pkt->getSize()/par("speed").doubleValue();
-    EV<<"[BBU] TransmissionTime: "<<transmissionTime<< " - to: "<<pkt->getDest()<<endl;
+    EV<<"[BBU] TransmissionTime: "<<transmissionTime<< " - of: "<<pkt->getId()<<endl;
     scheduleAt(simTime() + transmissionTime, beep);
 }
