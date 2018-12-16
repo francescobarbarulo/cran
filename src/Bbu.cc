@@ -10,22 +10,28 @@ void Bbu::initialize()
 
 void Bbu::handleMessage(cMessage *msg)
 {
+    cranMessage *pkt;
+
     if(msg->isSelfMessage()){
-        buffer.erase(buffer.begin());
-        for(int i=0; i<buffer.size(); i++){
+        // previous transmission in ended and it is removed from the buffer
+        buffer.pop();
+        /*
+        for(int i = 0; i < buffer.size(); i++){
             EV<<"Buffer["<<i<<"]: "<<buffer[i]->getId()<<endl;
-        }
+        }*/
 
         // BBU checks if there are other packet to be transmitted
-        if(buffer.size() == 0)
+        if(buffer.empty())
             working = false;
         else{
-            beginTransmission(buffer[0]);
+            pkt = buffer.front();
+            beginTransmission(pkt);
         }
     }else{
         // new packet from AS
-        cranMessage *pkt = check_and_cast<cranMessage*>(msg);
-        buffer.push_back(pkt);
+        pkt = check_and_cast<cranMessage*>(msg);
+        buffer.push(pkt);
+
         if(!working){
             // Bbu is idle so it can process the packet immediately
             working = true;

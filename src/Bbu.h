@@ -9,7 +9,7 @@
 #define BBU_H_
 
 #include <omnetpp.h>
-#include <vector>
+#include <queue>
 #include "cranMessage.h"
 
 using namespace omnetpp;
@@ -18,7 +18,7 @@ class Bbu : public cSimpleModule
 {
   private:
     cMessage *beep;
-    std::vector<cranMessage*> buffer;
+    std::queue<cranMessage*> buffer;
     bool working;
   protected:
     virtual void initialize();

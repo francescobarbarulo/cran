@@ -11,26 +11,33 @@ void Rrh::initialize()
 
 void Rrh::handleMessage(cMessage *msg)
 {
-    if(msg->isSelfMessage()){
+    cranMessage *pkt;
 
+    if(msg->isSelfMessage()){
+          /*
           std::ofstream myfile;
           myfile.open ("percentage.txt",std::ios_base::app);
           for(int i=0; i<buffer.size(); i++){
             myfile<<this->getId()<<" RRH Buffer["<<i<<"]: "<<buffer[i]->getId()<<endl;
           }
-          myfile.close();
-          buffer.erase(buffer.begin());
+          myfile.close();*/
+
+          // previous pkt is decompressed and it is removed from the buffer
+          cranMessage *prev_pkt = buffer.front();
+          buffer.pop();
+          // the packet is consumed
+          delete(prev_pkt);
           // RRH checks if there are other packet to be transmitted
-          if(buffer.size() == 0)
+          if(buffer.empty())
               working = false;
           else{
-              startDecompression(buffer[0]);
+              pkt = buffer.front();
+              startDecompression(pkt);
           }
-         // delete(buffer[0]);
       }else{
           // new packet from Bbu
-          cranMessage *pkt = check_and_cast<cranMessage*>(msg);
-          buffer.push_back(pkt);
+          pkt = check_and_cast<cranMessage*>(msg);
+          buffer.push(pkt);
           if(!working){
               // RRH is idle so it can process the packet immediately
               working = true;
