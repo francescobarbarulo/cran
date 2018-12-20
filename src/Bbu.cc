@@ -13,19 +13,17 @@ void Bbu::handleMessage(cMessage *msg)
     cranMessage *pkt;
 
     if(msg->isSelfMessage()){
-        // previous transmission in ended and it is removed from the buffer
+        pkt = buffer.front();
         buffer.pop();
-        /*
-        for(int i = 0; i < buffer.size(); i++){
-            EV<<"Buffer["<<i<<"]: "<<buffer[i]->getId()<<endl;
-        }*/
+        send(pkt, "out", pkt->getDest());
+
+        // !! response time expired !!
 
         // BBU checks if there are other packet to be transmitted
         if(buffer.empty())
             working = false;
         else{
-            pkt = buffer.front();
-            beginTransmission(pkt);
+            beginTransmission();
         }
     }else{
         // new packet from AS
@@ -35,19 +33,22 @@ void Bbu::handleMessage(cMessage *msg)
         if(!working){
             // Bbu is idle so it can process the packet immediately
             working = true;
-            beginTransmission(pkt);
+            beginTransmission();
         }
     }
-
-
 }
 
-void Bbu::beginTransmission(cranMessage *pkt){
+void Bbu::beginTransmission(){
+    // extract the first pkt from the buffer
+    cranMessage *pkt = buffer.front();
+
+    // !! waiting time expired !!
+
     // case compression enabled
     if (par("enableCompression").boolValue())
-        pkt->compressPkt(par("compressionPercentage").doubleValue());
+        pkt->compressPkt(par("compressionPercentage").intValue());
 
-    send(pkt, "out", pkt->getDest());
+    // wait for transmission
     simtime_t transmissionTime = pkt->getSize()/par("speed").doubleValue();
     EV<<"[BBU] TransmissionTime: "<<transmissionTime<< " - of: "<<pkt->getId()<<endl;
     scheduleAt(simTime() + transmissionTime, beep);

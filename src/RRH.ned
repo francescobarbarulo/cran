@@ -18,7 +18,10 @@ package cran;
 simple Rrh
 {
    	parameters:
-   	    int compressionPercentage = default(10);
+   	    int compressionPercentage;
+   	    // signals
+   	    @signal[delay](type=long);
+   	    @statistic[delayStat](source="delay"; record=vector;mean;);
     gates:
         input in;
 }

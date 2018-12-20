@@ -19,7 +19,7 @@ simple As
 {
     parameters:
         //N is the number of RRHs
-        int N = default(5);
+        int N;
         //if enableCompression is true the message will be decompressed by the RRH
         bool enableCompression = default(false);
         //if expSize is true the size distribution is exponential otherwise is lognormal
@@ -29,7 +29,7 @@ simple As
         //size variance 
         double varSize = default(3);
         //mean interArrivalTime between packets to the AS
-        double interArrivalTime @unit(ms) = default(100ms);
+        double interArrivalTime @unit(ms) = default(1000ms);
     gates:
         output out;
 }

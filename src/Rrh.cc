@@ -7,6 +7,8 @@ void Rrh::initialize()
 {
     working = false;
     beep = new cMessage();
+    // signal registration
+    delaySignal = registerSignal("delay");
 }
 
 void Rrh::handleMessage(cMessage *msg)
@@ -14,39 +16,40 @@ void Rrh::handleMessage(cMessage *msg)
     cranMessage *pkt;
 
     if(msg->isSelfMessage()){
-          /*
-          std::ofstream myfile;
-          myfile.open ("percentage.txt",std::ios_base::app);
-          for(int i=0; i<buffer.size(); i++){
-            myfile<<this->getId()<<" RRH Buffer["<<i<<"]: "<<buffer[i]->getId()<<endl;
-          }
-          myfile.close();*/
-
           // previous pkt is decompressed and it is removed from the buffer
           cranMessage *prev_pkt = buffer.front();
           buffer.pop();
+
+          // !! response time expired !!
+          EV << "end-to-end delay : " << simTime() << " - " << prev_pkt->getCreationTime() << endl;
+          emit(delaySignal, (simTime() - prev_pkt->getCreationTime()));
+
           // the packet is consumed
           delete(prev_pkt);
           // RRH checks if there are other packet to be transmitted
           if(buffer.empty())
               working = false;
           else{
-              pkt = buffer.front();
-              startDecompression(pkt);
+              startDecompression();
           }
       }else{
           // new packet from Bbu
           pkt = check_and_cast<cranMessage*>(msg);
           buffer.push(pkt);
+
           if(!working){
               // RRH is idle so it can process the packet immediately
               working = true;
-              startDecompression(pkt);
+              startDecompression();
           }
       }
 }
 
-void Rrh::startDecompression(cranMessage *pkt){
+void Rrh::startDecompression(){
+    cranMessage *pkt = buffer.front();
+
+    // !! waiting time expired !!
+
     // case compression enabled
     if (pkt->isCompressed()){
         simtime_t decompressionTime = par("compressionPercentage").intValue()*0.05;

@@ -23,7 +23,7 @@ class Bbu : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
-    void beginTransmission(cranMessage *pkt);
+    void beginTransmission();
 };
 
 #endif /* BBU_H_ */

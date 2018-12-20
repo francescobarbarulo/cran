@@ -20,10 +20,12 @@ class Rrh : public cSimpleModule
     cMessage *beep;
     std::queue<cranMessage*> buffer;
     bool working;
+    // signals
+    simsignal_t delaySignal;
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
-    void startDecompression(cranMessage *pkt);
+    void startDecompression();
 };
 
 #endif /* RRH_H_ */

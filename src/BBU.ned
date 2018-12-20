@@ -18,9 +18,9 @@ package cran;
 simple Bbu
 {
     parameters:
-        double speed = default(12000);
+        double speed = default(1800); // bytes/s
         bool enableCompression = default(false);
-        double compressionPercentage = default(10);
+        int compressionPercentage;
     gates:
         input in;
         output out[];
