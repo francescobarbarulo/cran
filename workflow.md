@@ -1,29 +1,29 @@
 #### WORKFLOW
 
 ## Objectives
-Compare the system when the bbu performs compression (B) and when it does not (A)
+Compare the system when the bbu performs compression (B) and when it does not (A)  
 Find cases when it is better doing compression
 
 ## Assumption
-Propagation times are negligible
-End-to-end delay is computed until the packet decompression is finished
-BBU switching time (time needed to change the output gate) is negligible
-Packets are not corrupted
+Propagation times are negligible  
+End-to-end delay is computed until the packet decompression is finished  
+BBU switching time (time needed to change the output gate) is negligible  
+Packets are not corrupted  
 No packet loss at the buffer (infinite buffer)
 
 ## Factors
-N remote radios
-X Bbu speed to rrh
-C compression on/off
-[S decompression time (if it depends on packet size too) = c_perc * 50ms]
+N remote radios  
+X Bbu speed to rrh  
+C compression on/off  
+\[S decompression time (if it depends on packet size too) = c_perc * 50ms\]
 
 ## Verification
 
-Step 1.
-- N = 1 RRH
-- s = const
+Step 1.  
+- N = 1 RRH  
+- s = const  
 
-Focus on compression time S:
+Focus on compression time S:  
 In order to be able to compare the behaviour of the system with or without compression we have computed the break-even 
 point between the end-to-end delay in A and in B, assuming there is not waiting time in both BBU and RRH.
 
