@@ -22,14 +22,15 @@ simple As
         int N;
         //if enableCompression is true the message will be decompressed by the RRH
         bool enableCompression = default(false);
-        //if expSize is true the size distribution is exponential otherwise is lognormal
-        bool expSize = default(true);
-        //size mean
-        double pktSize = default(1000);
-        //size variance 
-        double varSize = default(3);
+        //if exponentialDistribution is true the size distribution is exponential otherwise is lognormal
+        bool exponentialDistribution = default(true);
+        //exponential
+        double meanExponentialSize = default(1000); // -> 1000 bytes
+        //lognormal
+        double meanLognormalSize = default(7); // -> about 1000 bytes 
+        double varianceLognormalSize = default(0.1);
         //mean interArrivalTime between packets to the AS
-        double interArrivalTime @unit(ms) = default(1000ms);
+        double interArrivalTime @unit(s) = default(30s);
     gates:
         output out;
 }

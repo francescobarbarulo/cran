@@ -45,7 +45,7 @@ simtime_t cranMessage::getBbuArrivalTime(){
     return this->times.bbu_arrival;
 }
 
-simtime_t cranMessage::getRrhArrivaTime(){
+simtime_t cranMessage::getRrhArrivalTime(){
     return this->times.rrh_arrival;
 }
 

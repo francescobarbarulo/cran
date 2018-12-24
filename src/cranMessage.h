@@ -31,7 +31,7 @@ class cranMessage : public cMessage
     int getId();
     simtime_t getCreationTime();
     simtime_t getBbuArrivalTime();
-    simtime_t getRrhArrivaTime();
+    simtime_t getRrhArrivalTime();
     // features
     void compressPkt(int percentage);
 };

@@ -22,6 +22,15 @@ simple Rrh
    	    // signals
    	    @signal[delay](type=long);
    	    @statistic[delayStat](source="delay"; record=vector;mean;);
+   	    
+   	    @signal[responseTime](type=long);
+   	    @statistic[responseTimeStat](source="responseTime"; record=vector;mean;);
+   	    
+   	    @signal[waitingTime](type=long);
+   	    @statistic[waitingTimeStat](source="waitingTime"; record=vector;mean;);
+   	    
+   	    @signal[queuedJobs](type=long);
+   	    @statistic[queuedJobsStat](source="queuedJobs"; record=vector;mean;);
     gates:
         input in;
 }

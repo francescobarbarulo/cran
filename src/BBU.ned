@@ -18,9 +18,18 @@ package cran;
 simple Bbu
 {
     parameters:
-        double speed = default(1800); // bytes/s
+        double speed = default(200); // bytes/s
         bool enableCompression = default(false);
         int compressionPercentage;
+        
+        @signal[responseTime](type=long);
+   	    @statistic[responseTimeStat](source="responseTime"; record=vector;mean;);
+   	    
+   	    @signal[waitingTime](type=long);
+   	    @statistic[waitingTimeStat](source="waitingTime"; record=vector;mean;);
+   	    
+   	    @signal[queuedJobs](type=long);
+   	    @statistic[queuedJobsStat](source="queuedJobs"; record=vector;mean;);
     gates:
         input in;
         output out[];
