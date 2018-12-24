@@ -1,4 +1,8 @@
 /out/*
 /simulations/.qtenvrc
+/simulations/.cmdenv-log
+/simulations/*.anf
+/simulations/*.csv
+/simulations/results/*
 .settings/language.settings.xml
 /src/CRan
