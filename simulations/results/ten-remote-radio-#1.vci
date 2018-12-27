@@ -1,0 +1,150 @@
+file 10578930 1545914292                                        
+version 2
+run ten-remote-radio-1-20181227-13:32:37-2852
+attr configname ten-remote-radio
+attr datetime 20181227-13:32:37
+attr experiment ten-remote-radio
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network CRan
+attr processid 2852
+attr repetition 1
+attr replication #1
+attr resultdir results
+attr runnumber 1
+attr seedset 1
+param **.numRRH 10
+
+vector 0 CRan.bbu waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 1 CRan.bbu responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 2 CRan.rrh[5] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 3 CRan.rrh[8] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 4 CRan.rrh[5] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 5 CRan.rrh[5] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 6 CRan.rrh[8] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 7 CRan.rrh[8] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 8 CRan.rrh[0] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 9 CRan.rrh[0] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 10 CRan.rrh[0] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 11 CRan.rrh[7] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 12 CRan.rrh[7] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 13 CRan.rrh[7] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 14 CRan.rrh[6] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 15 CRan.rrh[6] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 16 CRan.rrh[6] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 17 CRan.rrh[4] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 18 CRan.rrh[4] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 19 CRan.rrh[4] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 20 CRan.rrh[2] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 21 CRan.rrh[2] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 22 CRan.rrh[2] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 23 CRan.rrh[9] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 24 CRan.rrh[9] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 25 CRan.rrh[9] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 26 CRan.rrh[3] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 27 CRan.rrh[3] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 28 CRan.rrh[3] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 29 CRan.rrh[1] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 30 CRan.rrh[1] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 31 CRan.rrh[1] delayStat:vector ETV
+attr "" mean
+attr source delay
+0	3147 1261913 2 163841 0.01 49047.23771239638 32768 0 23.452439264817 66697.256425009 422732.03892691
+1	1265060 1305455 15 163846 5.882 49049.09871239638 32768 0 24.893439264817 99107.821425009 620426.43736549
+0	2570515 998500 163846 289612 49049.09871239638 86398.06147443658 25155 0 27.731810354737 53770.547662651 325119.14251642
+1	3569015 1029947 163849 289613 49050.48271239638 86398.36147443658 25155 0 28.50555179591 79228.863662651 484888.49062183
+2	4598962 178996 17 289511 5.892 86368.266049299338 5900 0 0 0 0
+3	4777958 177527 18 289531 5.892 86372.32167146428 5847 0 0 0 0
+4	4955485 178996 19 289512 5.892 86368.266049299338 5900 0 0 0 0
+5	5134481 237727 19 289512 5.892 86368.266049299338 5900 0.02 27.783956696503 17902.464767858 107140.88907152
+6	5372208 177527 20 289532 5.892 86372.32167146428 5847 0 0 0 0
+7	5549735 235465 20 289532 5.892 86372.32167146428 5847 0.02 24.099332208385 17752.750106993 106395.6598778
+8	5785200 176277 27 289609 6.555 86397.095708037213 5805 0 0 0 0
+9	5961477 176277 28 289610 6.555 86397.095708037213 5805 0 0 0 0
+10	6137754 239978 28 289610 6.555 86397.095708037213 5805 0.02 26.477983659788 18411.713477148 117911.30854995
+11	6377732 181870 32 289579 6.978 86390.562897592522 5802 0 0 0 0
+12	6559602 181870 33 289580 6.978 86390.562897592522 5802 0 0 0 0
+13	6741472 239493 33 289580 6.978 86390.562897592522 5802 0.02 26.909630409232 18170.91544665 116820.37967421
+14	6980965 183226 41 289593 9.719 86393.841253943311 5837 0 0 0 0
+15	7164191 183226 42 289594 9.719 86393.841253943311 5837 0 0 0 0
+16	7347417 241410 42 289594 9.719 86393.841253943311 5837 0.02 28.52555179591 18157.961616888 112713.20445946
+17	7588827 179310 44 289566 10.262 86383.60991327554 5715 0 0 0 0
+18	7768137 179310 45 289567 10.262 86383.60991327554 5715 0 0 0 0
+19	7947447 236490 45 289567 10.262 86383.60991327554 5715 0.02 24.265000160441 17630.872919473 107061.78667332
+20	8183937 177877 50 289604 11.005 86396.658253943311 5671 0 0 0 0
+21	8361814 177877 51 289605 11.005 86396.658253943311 5671 0 0 0 0
+22	8539691 234304 51 289605 11.005 86396.658253943311 5671 0.02 24.913439264817 17513.682375432 107458.58416335
+23	8773995 182534 80 289590 20.309 86393.684253943311 5821 0 0 0 0
+24	8956529 182534 81 289591 20.309 86393.684253943311 5821 0 0 0 0
+25	9139063 240489 81 289591 20.309 86393.684253943311 5821 0.021 25.399746843905 18149.395753903 112549.2528657
+26	9379552 181204 104 289538 25.244 86375.81767146428 5779 0 0 0 0
+27	9560756 181204 105 289539 25.244 86375.81767146428 5779 0 0 0 0
+28	9741960 238814 105 289539 25.244 86375.81767146428 5779 0.02 28.431767986858 17972.452264329 113707.4150882
+29	9980774 180336 127 289614 28.76 86398.37147443658 5746 0 0 0 0
+30	10161110 180336 128 289615 28.76 86398.37147443658 5746 0 0 0 0
+31	10341446 237482 128 289615 28.76 86398.37147443658 5746 0.02 27.787810354737 17832.936358986 110713.0841673
+
