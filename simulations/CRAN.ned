@@ -26,7 +26,7 @@ network CRan
 {
     parameters:
     	//N is the number of RRHs
-        int numRRH = default(1);
+        int numRRH = default(5);
         @display("bgb=441,247");
         int compressionPercentage = default(10);
     submodules:

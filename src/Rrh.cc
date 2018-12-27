@@ -48,7 +48,7 @@ void Rrh::handleMessage(cMessage *msg)
           buffer.push(pkt);
           pkt->setRrhArrivalTime();
 
-        //  emit(queuedJobsSignal, buffer.size());
+          emit(queuedJobsSignal, buffer.size());
 
           if(!working){
               // RRH is idle so it can process the packet immediately

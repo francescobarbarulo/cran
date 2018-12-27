@@ -36,7 +36,7 @@ void Bbu::handleMessage(cMessage *msg)
         buffer.push(pkt);
         pkt->setBbuArrivalTime();
 
-       // emit(queuedJobsSignal, buffer.size());
+        emit(queuedJobsSignal, buffer.size());
 
         if(!working){
             // Bbu is idle so it can process the packet immediately
