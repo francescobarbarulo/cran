@@ -30,7 +30,7 @@ simple As
         double meanLognormalSize = default(7); // -> about 1000 bytes 
         double varianceLognormalSize = default(0.1);
         //mean interArrivalTime between packets to the AS
-        double interArrivalTime @unit(s) = default(30s);
+        double interArrivalTime @unit(s) = default(1.5s);
     gates:
         output out;
 }

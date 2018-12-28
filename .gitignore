@@ -6,3 +6,4 @@
 /simulations/results/*
 .settings/language.settings.xml
 /src/CRan
+/.computed/

@@ -1,0 +1,150 @@
+file 10519812 1545914290                                        
+version 2
+run ten-remote-radio-5-20181227-13:32:37-12088
+attr configname ten-remote-radio
+attr datetime 20181227-13:32:37
+attr experiment ten-remote-radio
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network CRan
+attr processid 12088
+attr repetition 5
+attr replication #5
+attr resultdir results
+attr runnumber 5
+attr seedset 5
+param **.numRRH 10
+
+vector 0 CRan.bbu waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 1 CRan.bbu responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 2 CRan.rrh[3] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 3 CRan.rrh[3] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 4 CRan.rrh[3] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 5 CRan.rrh[6] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 6 CRan.rrh[6] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 7 CRan.rrh[6] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 8 CRan.rrh[9] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 9 CRan.rrh[9] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 10 CRan.rrh[9] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 11 CRan.rrh[7] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 12 CRan.rrh[7] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 13 CRan.rrh[7] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 14 CRan.rrh[0] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 15 CRan.rrh[0] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 16 CRan.rrh[0] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 17 CRan.rrh[1] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 18 CRan.rrh[1] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 19 CRan.rrh[1] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 20 CRan.rrh[4] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 21 CRan.rrh[4] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 22 CRan.rrh[4] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 23 CRan.rrh[2] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 24 CRan.rrh[2] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 25 CRan.rrh[2] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 26 CRan.rrh[5] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 27 CRan.rrh[5] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 28 CRan.rrh[5] delayStat:vector ETV
+attr "" mean
+attr source delay
+vector 29 CRan.rrh[8] waitingTimeStat:vector ETV
+attr "" mean
+attr source waitingTime
+vector 30 CRan.rrh[8] responseTimeStat:vector ETV
+attr "" mean
+attr source responseTime
+vector 31 CRan.rrh[8] delayStat:vector ETV
+attr "" mean
+attr source delay
+0	3149 1264433 2 163837 0.01 49472.817063727402 32768 0 25.066710522834 63973.685101523 364735.49009205
+1	1267582 1307511 3 163840 0.066 49475.781063727402 32768 0 27.964060847294 96895.861101522 558872.49064858
+0	2575093 983541 163840 287759 49475.781063727402 86399.585512544749 24784 0 21.623245227615 53028.880755828 325971.39197905
+1	3558634 1014757 163851 287759 49477.496063727402 86399.585512544749 24783 0 23.584799025175 78188.448649028 484435.65583234
+2	4573391 174677 4 287706 0.076 86386.941512544749 5748 0 0 0 0
+3	4748068 174677 5 287707 0.076 86386.941512544749 5748 0 0 0 0
+4	4922745 232041 5 287707 0.076 86386.941512544749 5748 0.02 23.885275201911 17371.33926725 102553.98835456
+5	5154786 178098 9 287725 3.540804786928 86390.603512544749 5860 0 0 0 0
+6	5332884 178099 10 287726 3.540804786928 86390.603512544749 5860 0 0 0 0
+7	5510983 236662 10 287726 3.540804786928 86390.603512544749 5860 0.02 23.82455284008 17860.951113362 105464.89567579
+8	5747645 171935 16 287732 7.52157574975 86392.933512544749 5658 0 0 0 0
+9	5919580 171935 17 287733 7.52157574975 86392.933512544749 5658 0 0 0 0
+10	6091515 233881 17 287733 7.52157574975 86392.933512544749 5658 0.02 25.914450624201 17162.574501017 100465.05012752
+11	6325396 177906 19 287750 8.02657574975 86396.986512544749 5670 0 0 0 0
+12	6503302 177907 20 287751 8.02657574975 86396.986512544749 5670 0 0 0 0
+13	6681209 234506 20 287751 8.02657574975 86396.986512544749 5670 0.02 27.984060847294 17480.672443292 104414.28509027
+14	6915715 180915 24 287645 9.900807520731 86363.419835680472 5764 0 0 0 0
+15	7096630 180915 25 287646 9.900807520731 86363.419835680472 5764 0 0 0 0
+16	7277545 238837 25 287646 9.900807520731 86363.419835680472 5764 0.02 20.415344878662 17840.224331539 106107.95204499
+17	7516382 177662 42 287741 14.944968560444 86395.373512544749 5660 0 0 0 0
+18	7694044 177662 43 287742 14.944968560444 86395.373512544749 5660 0 0 0 0
+19	7871706 234047 43 287742 14.944968560444 86395.373512544749 5660 0.02 23.604799025175 17334.512932208 102332.14402896
+20	8105753 182945 55 287738 19.002968560444 86394.256512544749 5827 0 0 0 0
+21	8288698 182945 56 287739 19.002968560444 86394.256512544749 5827 0 0 0 0
+22	8471643 240936 56 287739 19.002968560444 86394.256512544749 5827 0.02 24.765187951996 17924.315295103 109281.12666301
+23	8712579 179910 58 287581 19.353968560444 86341.309035471575 5736 0 0 0 0
+24	8892489 179911 59 287582 19.353968560444 86341.309035471575 5736 0 0 0 0
+25	9072400 237285 59 287582 19.353968560444 86341.309035471575 5736 0.022 22.488490531574 17632.02003794 106058.59191343
+26	9309685 182696 76 287760 22.775968560444 86399.595512544749 5821 0 0 0 0
+27	9492381 182696 77 287761 22.775968560444 86399.595512544749 5821 0 0 0 0
+28	9675077 240248 77 287761 22.775968560444 86399.595512544749 5821 0.02 25.328579926817 17624.22128339 103247.85698501
+29	9915325 182298 165 287689 53.254194304318 86381.101017035033 5807 0 0 0 0
+30	10097623 182298 166 287690 53.254194304318 86381.101017035033 5807 0 0 0 0
+31	10279921 239889 166 287690 53.254194304318 86381.101017035033 5807 0.02 25.489710522834 18004.498545449 110408.6483874
+
