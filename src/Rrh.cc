@@ -12,6 +12,8 @@ void Rrh::initialize()
     responseTimeSignal = registerSignal("responseTime");
     waitingTimeSignal = registerSignal("waitingTime");
     queuedJobsSignal = registerSignal("queuedJobs");
+    // delete previous data
+    remove("system-delay.csv");
 }
 
 void Rrh::handleMessage(cMessage *msg)
@@ -31,7 +33,7 @@ void Rrh::handleMessage(cMessage *msg)
           emit(responseTimeSignal, simTime() - prev_pkt->getRrhArrivalTime());
           emit(delaySignal, (simTime() - prev_pkt->getCreationTime()));
 
-          file << simTime() << "," << simTime() - prev_pkt->getCreationTime() << endl;
+          file << simTime() << ";" << simTime() - prev_pkt->getCreationTime() << endl;
           file.close();
 
           // the packet is consumed
@@ -48,8 +50,7 @@ void Rrh::handleMessage(cMessage *msg)
           buffer.push(pkt);
           pkt->setRrhArrivalTime();
 
-          long grandezza = buffer.size();
-          emit(queuedJobsSignal, grandezza);
+          emit(queuedJobsSignal, (long)buffer.size());
 
           if(!working){
               // RRH is idle so it can process the packet immediately
