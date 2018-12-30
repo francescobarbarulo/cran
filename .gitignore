@@ -7,3 +7,7 @@
 .settings/language.settings.xml
 /src/CRan
 /.computed/
+/documentation/project.log
+/documentation/project.aux
+/documentation/project.pdf
+/documentation/project.toc
