@@ -1,6 +1,6 @@
 \documentclass[11pt,a4paper,oneside, openright]{article}
 \usepackage{graphicx}
-\usepackage[italian]{babel}
+\usepackage[british]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{mathtools}
 \usepackage{setspace}
@@ -8,8 +8,6 @@
 \usepackage{tikz}
 \usetikzlibrary{trees}
 \usepackage{url}
-
-\renewcommand{\baselinestretch}{1.5}
 
 \begin{document}
 {\setstretch{1.0}
@@ -32,5 +30,85 @@
 
 
 \tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+\subsection{Description of the system}
+
+\subsection{Objectives and performance indexes}
+
+\section{Model}
+
+\subsection{Assumptions}
+First of all we make some assuptions:
+\begin{itemize}
+    \item Propagation times ($ T_{prop} $) are 10ms (negligible);
+    \item In case A, the end-to-end delay is computed when the packet arrives at the RRH;
+    \item In case B, the end-to-end delay is computed until the packet decompression is finished;
+    \item BBU switching time (time needed to change the output gate) is negligible;
+    \item In case B, the compression time on BBU is negligible;
+    \item Packets are not corrupted;
+    \item No packet loss at the buffers (infinite buffers).
+\end{itemize}
+
+With these assumptions, we can compute the end-to-end delay as following:
+
+$$ T_{delay} =  T_{propagation} + T_{waiting\_bbu} + T_{transmission} + T_{propagation} + T_{waiting\_rrh} + T_{decompression} $$
+
+where 
+
+$$ T_{transmission} = \frac{1}{\mu_{bbu}} = \frac{s}{X} $$
+
+and
+
+$$ T_{decompression} = \frac{1}{\mu_{rrh}} = p \cdot 50ms $$
+
+\subsection{Validation}
+The simulator has been modelled as an Open Jackson Network because the hypotheses are verified:
+\begin{itemize}
+    \item 2 service centers, both of them are an M/M/1 system with a rate $ \mu_{i} $;
+    \item external arrivals are poissonian;
+    \item routing probabilities are state-independent because they are uniform;
+    \item time to reach the next service center is negligible.
+\end{itemize}
+
+% disegno %
+
+\subsection{Stability conditions}
+In order to compute the stabilty conditions we have to distinguish between the two cases.
+
+In case A we have to respect only one condition reguarding the BBU. Indeed, on the RRHs we will never have queues because when the packet arrives, it is immediately consumed.
+Hence, the stability condition is the following:
+
+$$ \lambda_{bbu} < \mu_{bbu}, \quad \lambda_{bbu} = \frac{1}{t}, \quad \mu_{bbu} = \frac{X}{s}$$
+
+\begin{equation} \label{eq:rho-bbu}
+\rho_{bbu} = \frac{\lambda_{bbu}}{\mu_{bbu}} = \frac{s}{t \cdot X} < 1
+\end{equation}
+
+In case B we have also to take in account the stability condition on the RRHs because now the RRH service time is not null and depends on the compression percentage and the arrival rate to each RRH depends on the number of remote radios. In fact
+
+$$ \lambda_{rrh} = \lambda_{bbu} \cdot \pi = \lambda_{bbu} \cdot \frac{1}{N} $$
+
+$$ \mu_{rrh} = \frac{1}{p \cdot k}, \quad k = 50ms $$
+
+\begin{equation}
+\rho_{rrh} = \frac{\lambda_{rrh}}{\mu_{rrh}} = \frac{p \cdot k \cdot \lambda_{bbu}}{N} < 1
+\end{equation}
+
+Hence, using the result obtained in \eqref{eq:rho-bbu}, the final stability condition for case B is:
+
+$$ \begin{cases} \rho_{bbu} = \frac{s}{t \cdot X} < 1 \\ \\ \rho_{rrh} = \frac{p \cdot k}{t \cdot N} < 1 \end{cases} $$
+
+with steady state probability, either on BBU and RRHs, equal to:
+
+$$ p_{n} = \rho^n \cdot (1 - \rho) $$
+
+Note that the steady state probability on each RRH and on the BBU is equal to an M/M/1.
+
+
+
 
 \end{document}
