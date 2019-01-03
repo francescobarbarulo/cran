@@ -68,9 +68,19 @@ void Rrh::startDecompression(){
 
     // case compression enabled
     if (pkt->isCompressed()){
-        simtime_t decompressionTime = par("compressionPercentage").intValue()*0.05;
-        scheduleAt(simTime() + decompressionTime , beep);
-        EV<<"[RRH] decompressionTime: "<<decompressionTime<<endl;
+        // Compression time independant
+        if (par("dependantDecompressionTime").boolValue()== false){
+            simtime_t decompressionTime = par("compressionPercentage").intValue()*0.05;
+            scheduleAt(simTime() + decompressionTime , beep);
+            EV<<"[RRH] decompressionTime: "<<decompressionTime<<endl;
+        }
+        // Compression time dependant
+        else {
+            simtime_t decompressionTime = pkt->getSize()/par("decompressionSpeed").doubleValue();
+            scheduleAt(simTime() + decompressionTime , beep);
+            EV<<"[RRH] decompressionTime: "<<decompressionTime<<endl;
+        }
+
     } else {
         scheduleAt(simTime(), beep);
     }
