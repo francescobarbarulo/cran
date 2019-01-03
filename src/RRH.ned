@@ -19,6 +19,8 @@ simple Rrh
 {
    	parameters:
    	    int compressionPercentage;
+   	    bool dependantDecompressionTime = default(false);
+   	    double decompressionSpeed = default(1000);
    	    // signals
    	    @signal[delay](type=long);
    	    @statistic[delayStat](source="delay"; record=vector;mean;);
