@@ -33,6 +33,7 @@ void Bbu::handleMessage(cMessage *msg)
     }else{
         emit(queuedJobsSignal, (long)(buffer.size()));
         // new packet from AS
+        emit(queuedJobsSignal, (long)buffer.size());
         pkt = check_and_cast<cranMessage*>(msg);
         buffer.push(pkt);
         pkt->setBbuArrivalTime();

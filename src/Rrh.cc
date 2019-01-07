@@ -47,10 +47,16 @@ void Rrh::handleMessage(cMessage *msg)
       }else{
           emit(queuedJobsSignal, (long)(buffer.size()));
           // new packet from Bbu
+          emit(queuedJobsSignal, (long)buffer.size());
           pkt = check_and_cast<cranMessage*>(msg);
           buffer.push(pkt);
           pkt->setRrhArrivalTime();
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 6b8a940880e6f87d84e061c1e77835da5a5e92a3
           if(!working){
               // RRH is idle so it can process the packet immediately
               working = true;
@@ -67,9 +73,19 @@ void Rrh::startDecompression(){
 
     // case compression enabled
     if (pkt->isCompressed()){
-        simtime_t decompressionTime = par("compressionPercentage").intValue()*0.05;
-        scheduleAt(simTime() + decompressionTime , beep);
-        EV<<"[RRH] decompressionTime: "<<decompressionTime<<endl;
+        // Compression time independant
+        if (par("dependantDecompressionTime").boolValue()== false){
+            simtime_t decompressionTime = par("compressionPercentage").intValue()*0.05;
+            scheduleAt(simTime() + decompressionTime , beep);
+            EV<<"[RRH] decompressionTime: "<<decompressionTime<<endl;
+        }
+        // Compression time dependant
+        else {
+            simtime_t decompressionTime = pkt->getSize()/par("decompressionSpeed").doubleValue();
+            scheduleAt(simTime() + decompressionTime , beep);
+            EV<<"[RRH] decompressionTime: "<<decompressionTime<<endl;
+        }
+
     } else {
         scheduleAt(simTime(), beep);
     }
