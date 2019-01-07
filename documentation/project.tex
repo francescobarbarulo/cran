@@ -42,7 +42,7 @@ The system examined is a simplified version of an architecture presented for fut
 When the BBU receives a packet from the AS, it can operate in two different ways:
 \begin{itemize}
 	\item[A)]It retransmits directly the packet to the RRH which serves the destination cell N;
-	\item[B)]The BBU compress the packet, reducing its size by X\% and retransmitting it to the proper RRH. Once arrived at the RRH, the packet is decompressed. Such operation takes S seconds, where S is given by $ S = X \cdot 50ms $. Only one packet can be decompressed at a time. If the decompressing process is busy, the incoming data packets are queued and served using a FIFO policy.
+	\item[B)]The BBU compress the packet, reducing its size by C\% and retransmitting it to the proper RRH. Once arrived at the RRH, the packet is decompressed. Such operation takes S seconds, where S is given by $ S = C \cdot 50ms $. Only one packet can be decompressed at a time. If the decompressing process is busy, the incoming data packets are queued and served using a FIFO policy.
 \end{itemize}
 
 Packet size and interarrivals are random variables described as:
@@ -53,11 +53,7 @@ Packet size and interarrivals are random variables described as:
 
 \subsection{Objectives and performance indexes}
 The objective of the study is to determine if and under what conditions it is better to perform packet compression or not, or possibly to adopt a hybrid mode of operation.
-For a correct evaluation of the system will be taken as reference the following statistics:
-\begin{itemize}
-	\item end-to-end average delay of packets;
-	\item average queuing time of packets.
-\end{itemize}
+For a correct evaluation of the system will be taken as reference the mean end-to-end delay of packets.
 
 \section{Model}
 Before introducing the model, we make some semplifications which do not affect the final results.
@@ -75,7 +71,7 @@ First of all we make some assuptions:
 
 With these assumptions, we can compute the end-to-end delay as following:
 
-$$ T_{delay} =  T_{waiting\_bbu} + T_{transmission} + T_{waiting\_rrh} + T_{decompression} + 2 \cdot T_{prop} $$
+$$ T_{delay} =  T_{waiting\_bbu} + T_{transmission} + T_{waiting\_rrh} + T_{decompression} $$
 
 where 
 
@@ -83,7 +79,7 @@ $$ T_{transmission} = \frac{1}{\mu_{bbu}} = \frac{s}{X} $$
 
 and
 
-$$ T_{decompression} = \frac{1}{\mu_{rrh}} = p \cdot 50ms $$
+$$ T_{decompression} = \frac{1}{\mu_{rrh}} = C \cdot 50ms $$
 
 \subsection{Validation}
 The simulator has been validated through a comparison with a queueing theory model of the system.
@@ -100,7 +96,7 @@ The system has been modelled as an Open Jackson Network because all the hypothes
 \subsubsection{Stability conditions}
 In order to compute the stabilty conditions we have to distinguish between the two cases.
 
-In case A we have to respect only one condition reguarding the BBU. Indeed, on the RRHs we will never have queues because when the packet arrives, it is immediately consumed.
+In case A we have to respect only one condition regarding the BBU. Indeed, on the RRHs we will never have queues because when the packet arrives, it is immediately consumed.
 Hence, the stability condition is the following:
 
 $$ \lambda_{bbu} < \mu_{bbu}, \quad \lambda_{bbu} = \frac{1}{t}, \quad \mu_{bbu} = \frac{X}{s}$$
@@ -109,14 +105,17 @@ $$ \lambda_{bbu} < \mu_{bbu}, \quad \lambda_{bbu} = \frac{1}{t}, \quad \mu_{bbu}
 \rho_{bbu} = \frac{\lambda_{bbu}}{\mu_{bbu}} = \frac{s}{t \cdot X} < 1
 \end{equation}
 
-In case B we have also to take in account the stability condition on the RRHs because now the RRH service time is not null and depends on the compression percentage and the arrival rate to each RRH depends on the number of remote radios. In fact
+Note that $s$ represents the number of bytes that the BBU has to transmit. From now on we will consider:
+$$s = s\cdot(1-\frac{C}{100})$$
+
+In case B we have also to take in account the stability condition on the RRHs because now the RRH service time is not null and depends on the compression percentage. Furthermore the arrival rate to each RRH depends on the number of remote radios. In fact:
 
 $$ \lambda_{rrh} = \lambda_{bbu} \cdot \pi = \lambda_{bbu} \cdot \frac{1}{N} $$
 
-$$ \mu_{rrh} = \frac{1}{p \cdot k}, \quad k = 50ms $$
+$$ \mu_{rrh} = \frac{1}{C \cdot k}, \quad k = 50ms $$
 
 \begin{equation}
-\rho_{rrh} = \frac{\lambda_{rrh}}{\mu_{rrh}} = \frac{p \cdot k \cdot \lambda_{bbu}}{N} < 1
+\rho_{rrh} = \frac{\lambda_{rrh}}{\mu_{rrh}} = \frac{C \cdot k \cdot \lambda_{bbu}}{N} < 1
 \end{equation}
 % questo è ok in condizione di stabilità, ma queste SONO le condizioni di stabilità
 
@@ -133,7 +132,7 @@ Note that the steady state probability on each RRH and on the BBU is equal to an
 % At the steady state, by Burke's theorem, the departure process at the BBU, which is an M/M/1, is a Poisson process with a rate $ \lambda_{bbu} $.
 
 \subsection{Statistics for validation}
-Mean number of jobs in the system and mean response time are computed and compared with the ones obtained from the simulator.
+In order to validate our model we have used the subsequent perfomance indexes taken from the queueing theory:
 
 $$ E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s}$$
 
@@ -142,5 +141,8 @@ $$ E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} $$
 $$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{p \cdot k}{t \cdot N - p \cdot k}$$
 
 $$ E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} $$
+%?
+The successful comparison between the previous equations and the simulator results assure us that we are working on a correct model for our system.
+%?
 
 \end{document}
