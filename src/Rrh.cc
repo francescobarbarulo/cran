@@ -45,18 +45,13 @@ void Rrh::handleMessage(cMessage *msg)
               startDecompression();
           }
       }else{
-          emit(queuedJobsSignal, (long)(buffer.size()));
           // new packet from Bbu
           emit(queuedJobsSignal, (long)buffer.size());
           pkt = check_and_cast<cranMessage*>(msg);
           buffer.push(pkt);
           pkt->setRrhArrivalTime();
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 6b8a940880e6f87d84e061c1e77835da5a5e92a3
           if(!working){
               // RRH is idle so it can process the packet immediately
               working = true;

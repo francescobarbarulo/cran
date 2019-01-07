@@ -1,10 +1,3 @@
-/*
- * Bbu.h
- *
- *  Created on: 06 dic 2018
- *      Author: Gerardo
- */
-
 #ifndef BBU_H_
 #define BBU_H_
 
