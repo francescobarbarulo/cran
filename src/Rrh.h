@@ -1,10 +1,3 @@
-/*
- * Rrh.h
- *
- *  Created on: 06 dic 2018
- *      Author: Gerardo
- */
-
 #ifndef RRH_H_
 #define RRH_H_
 

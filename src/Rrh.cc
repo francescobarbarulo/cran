@@ -52,7 +52,6 @@ void Rrh::handleMessage(cMessage *msg)
           pkt->setRrhArrivalTime();
 
 
-
           if(!working){
               // RRH is idle so it can process the packet immediately
               working = true;
