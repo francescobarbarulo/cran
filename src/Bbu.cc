@@ -31,12 +31,11 @@ void Bbu::handleMessage(cMessage *msg)
             beginTransmission();
         }
     }else{
+        emit(queuedJobsSignal, (long)(buffer.size()));
         // new packet from AS
         pkt = check_and_cast<cranMessage*>(msg);
         buffer.push(pkt);
         pkt->setBbuArrivalTime();
-
-        emit(queuedJobsSignal, (long)buffer.size());
 
         if(!working){
             // Bbu is idle so it can process the packet immediately
