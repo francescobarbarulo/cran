@@ -31,8 +31,8 @@ simple Rrh
    	    @signal[waitingTime](type=long);
    	    @statistic[waitingTimeStat](source="waitingTime"; record=vector;mean;);
    	    
-   	    @signal[queuedJobs](type=long);
-   	    @statistic[queuedJobsStat](source="queuedJobs"; record=vector;mean;);
+   	    @signal[rrhJobs](type=long);
+   	    @statistic[rrhJobsStat](source="rrhJobs"; record=vector;mean;);
     gates:
         input in;
 }

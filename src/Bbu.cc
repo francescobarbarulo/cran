@@ -9,7 +9,7 @@ void Bbu::initialize()
 
     responseTimeSignal = registerSignal("responseTime");
     waitingTimeSignal = registerSignal("waitingTime");
-    queuedJobsSignal = registerSignal("queuedJobs");
+    bbuJobsSignal = registerSignal("bbuJobs");
 }
 
 void Bbu::handleMessage(cMessage *msg)
@@ -32,7 +32,7 @@ void Bbu::handleMessage(cMessage *msg)
         }
     }else{
         // new packet from AS
-        emit(queuedJobsSignal, (long)buffer.size());
+        emit(bbuJobsSignal, (long)buffer.size());
         pkt = check_and_cast<cranMessage*>(msg);
         buffer.push(pkt);
         pkt->setBbuArrivalTime();

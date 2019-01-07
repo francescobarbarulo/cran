@@ -24,7 +24,7 @@ class Rrh : public cSimpleModule
     simsignal_t delaySignal;
     simsignal_t responseTimeSignal;
     simsignal_t waitingTimeSignal;
-    simsignal_t queuedJobsSignal;
+    simsignal_t rrhJobsSignal;
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);

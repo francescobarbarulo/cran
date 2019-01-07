@@ -11,7 +11,7 @@ void Rrh::initialize()
     delaySignal = registerSignal("delay");
     responseTimeSignal = registerSignal("responseTime");
     waitingTimeSignal = registerSignal("waitingTime");
-    queuedJobsSignal = registerSignal("queuedJobs");
+    rrhJobsSignal = registerSignal("rrhJobs");
     // delete previous data
     remove("system-delay.csv");
 }
@@ -46,7 +46,7 @@ void Rrh::handleMessage(cMessage *msg)
           }
       }else{
           // new packet from Bbu
-          emit(queuedJobsSignal, (long)buffer.size());
+          emit(rrhJobsSignal, (long)buffer.size());
           pkt = check_and_cast<cranMessage*>(msg);
           buffer.push(pkt);
           pkt->setRrhArrivalTime();

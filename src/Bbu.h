@@ -23,7 +23,7 @@ class Bbu : public cSimpleModule
     // signals
     simsignal_t responseTimeSignal;
     simsignal_t waitingTimeSignal;
-    simsignal_t queuedJobsSignal;
+    simsignal_t bbuJobsSignal;
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);

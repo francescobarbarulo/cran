@@ -28,8 +28,8 @@ simple Bbu
    	    @signal[waitingTime](type=long);
    	    @statistic[waitingTimeStat](source="waitingTime"; record=vector;mean;);
    	    
-   	    @signal[queuedJobs](type=long);
-   	    @statistic[queuedJobsStat](source="queuedJobs"; record=vector;mean;);
+   	    @signal[bbuJobs](type=long);
+   	    @statistic[bbuJobsStat](source="bbuJobs"; record=vector;mean;);
     gates:
         input in;
         output out[];
