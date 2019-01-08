@@ -19,7 +19,7 @@ simple Rrh
 {
    	parameters:
    	    int compressionPercentage;
-   	    bool dependantDecompressionTime = default(false);
+   	    bool dependentDecompressionTime = default(false);
    	    double decompressionSpeed = default(1000);
    	    // signals
    	    @signal[delay](type=long);

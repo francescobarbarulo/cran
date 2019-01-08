@@ -12,7 +12,7 @@ class Rrh : public cSimpleModule
   private:
     cMessage *beep;
     std::queue<cranMessage*> buffer;
-    bool working;
+    bool idle;
     // signals
     simsignal_t delaySignal;
     simsignal_t responseTimeSignal;
@@ -21,6 +21,8 @@ class Rrh : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    virtual void finish();
+    simtime_t getDecompressionTime(cranMessage *pkt);
     void startDecompression();
 };
 

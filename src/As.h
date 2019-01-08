@@ -15,6 +15,8 @@ class As : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    virtual void finish();
+    int getSizefromDistribution();
 };
 
 #endif /* AS_H_ */

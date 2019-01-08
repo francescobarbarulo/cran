@@ -12,7 +12,7 @@ class cranMessage : public cMessage
     int id;
     int size;
     int dest;
-    bool compression;
+    int compression;
     struct {
         simtime_t created_at;
         simtime_t bbu_arrival;
@@ -20,14 +20,14 @@ class cranMessage : public cMessage
     } times;
 
   public:
-    cranMessage(int id, int s, int d, bool c);
+    cranMessage(int id, int s, int d, int c);
     // setter
     void setBbuArrivalTime();
     void setRrhArrivalTime();
     // getter
     int getSize();
     int getDest();
-    bool isCompressed();
+    int getCompression();
     int getId();
     simtime_t getCreationTime();
     simtime_t getBbuArrivalTime();

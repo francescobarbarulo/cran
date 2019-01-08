@@ -2,31 +2,38 @@
 
 Define_Module(As);
 
+int As::getSizefromDistribution(){
+    if(par("exponentialDistribution").boolValue())
+        return (int)exponential(par("meanExponentialSize").doubleValue());
+
+    return (int)lognormal(par("meanLognormalSize").doubleValue(), par("varianceLognormalSize").doubleValue());
+}
+
 void As::initialize()
 {
+    this->counter = 0;
     //new self-message to start the AS
-    beep = new cMessage();
-    scheduleAt(simTime(), beep);
-    counter = 0;
-
+    this->beep = new cMessage();
+    scheduleAt(simTime(), this->beep);
 }
 
 void As::handleMessage(cMessage *msg)
 {
     //msg is always a self-message
     int dest = intuniform(0, par("N").intValue()-1);
-    int size;
+    int size = this->getSizefromDistribution();
 
-    if(par("exponentialDistribution").boolValue())
-        size = (int)exponential(par("meanExponentialSize").doubleValue());
-    else
-        size = (int)lognormal(par("meanLognormalSize").doubleValue(), par("varianceLognormalSize").doubleValue());
+    // new packet creation
+    this->pkt = new cranMessage(this->counter++, size, dest, par("enableCompression").boolValue());
+    send(this->pkt, "out");
 
-    pkt = new cranMessage(counter++, size, dest, par("enableCompression").boolValue());
-
-    send(pkt, "out");
-    //simtime_t time = par("interArrivalTime").doubleValue();
+    // waiting for the creation of next packet
     simtime_t time = exponential(par("interArrivalTime").doubleValue());
     EV<<"Send packet to "<<dest<<" with size "<<size<<". Next packet will be sent in "<<time<<endl;
-    scheduleAt(simTime() + time, beep);
+    scheduleAt(simTime() + time, this->beep);
+}
+
+void As::finish(){
+    cancelEvent(this->beep);
+    cancelAndDelete(this->beep);
 }

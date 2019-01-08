@@ -12,7 +12,7 @@ class Bbu : public cSimpleModule
   private:
     cMessage *beep;
     std::queue<cranMessage*> buffer;
-    bool working;
+    bool idle;
     // signals
     simsignal_t responseTimeSignal;
     simsignal_t waitingTimeSignal;
@@ -20,6 +20,7 @@ class Bbu : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    virtual void finish();
     void beginTransmission();
 };
 

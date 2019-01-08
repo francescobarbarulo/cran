@@ -1,6 +1,6 @@
 #include "cranMessage.h"
 
-cranMessage::cranMessage(int id, int s, int d, bool c){
+cranMessage::cranMessage(int id, int s, int d, int c){
     this->id=id;
     this->size = s;
     this->dest = d;
@@ -29,7 +29,7 @@ int cranMessage::getDest(){
     return this->dest;
 }
 
-bool cranMessage::isCompressed(){
+int cranMessage::getCompression(){
     return this->compression;
 }
 
@@ -53,6 +53,6 @@ simtime_t cranMessage::getRrhArrivalTime(){
 
 void cranMessage::compressPkt(int percentage){
     this->size = this->size * ((100.0 - percentage)/100.0) + 1;
-    this->compression = true;
-    EV << "compressed packet size: " << this->size << endl;
+    this->compression = percentage;
+    EV << "compressed packet by: " << this->compression << " - new size: " << this->size << endl;
 }
