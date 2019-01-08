@@ -20,7 +20,7 @@ simple Bbu
     parameters:
         double speed = default(1000); // bytes/s
         bool enableCompression = default(false);
-        int compressionPercentage;
+        int compressionPercentage = default(10);
         
         @signal[responseTime](type=long);
    	    @statistic[responseTimeStat](source="responseTime"; record=vector;mean;);

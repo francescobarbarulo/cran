@@ -20,7 +20,7 @@ class cranMessage : public cMessage
     } times;
 
   public:
-    cranMessage(int id, int s, int d, int c);
+    cranMessage(int id, int s, int d);
     // setter
     void setBbuArrivalTime();
     void setRrhArrivalTime();

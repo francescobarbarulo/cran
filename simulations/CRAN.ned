@@ -19,29 +19,17 @@ import cran.As;
 import cran.Bbu;
 import cran.Rrh;
 
-//
-// Two instances (tic and toc) of Txc connected.
-//
 network CRan
 {
     parameters:
-    	//N is the number of RRHs
+    	// number of RRHs
         int numRRH = default(1);
-        @display("bgb=441,247");
-        int compressionPercentage = default(10);
     submodules:
         as: As {
             N = numRRH;
-            @display("p=51,109");
         }
-        bbu: Bbu {
-            compressionPercentage = compressionPercentage;
-            @display("p=181,109");
-        }
-        rrh[numRRH]: Rrh {
-            compressionPercentage = compressionPercentage;
-            @display("p=300,30,m,1,3");
-        }
+        bbu: Bbu;
+        rrh[numRRH]: Rrh;
     connections:
         as.out --> {  delay = 10ms; } --> bbu.in;
         for i=0..numRRH-1 {

@@ -18,7 +18,7 @@ package cran;
 simple Rrh
 {
    	parameters:
-   	    int compressionPercentage;
+   	    double timePerCompressionUnit = default(0.05);
    	    bool dependentDecompressionTime = default(false);
    	    double decompressionSpeed = default(1000);
    	    // signals

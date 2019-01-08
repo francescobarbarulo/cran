@@ -24,7 +24,7 @@ void As::handleMessage(cMessage *msg)
     int size = this->getSizefromDistribution();
 
     // new packet creation
-    this->pkt = new cranMessage(this->counter++, size, dest, par("enableCompression").boolValue());
+    this->pkt = new cranMessage(this->counter++, size, dest);
     send(this->pkt, "out");
 
     // waiting for the creation of next packet

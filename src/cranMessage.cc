@@ -1,10 +1,10 @@
 #include "cranMessage.h"
 
-cranMessage::cranMessage(int id, int s, int d, int c){
+cranMessage::cranMessage(int id, int s, int d){
     this->id=id;
     this->size = s;
     this->dest = d;
-    this->compression = c;
+    this->compression = 0;
     this->times.created_at = simTime();
     EV << "pkt #" << id << " created at " << this->times.created_at << endl;
 }

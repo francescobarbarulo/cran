@@ -6,7 +6,7 @@ Define_Module(Rrh);
 simtime_t Rrh::getDecompressionTime(cranMessage *pkt){
     // Compression time does not depend on packet size
     if (!par("dependentDecompressionTime").boolValue())
-        return par("compressionPercentage").intValue()*0.05;
+        return pkt->getCompression()*par("timePerCompressionUnit").doubleValue();
     // Compression time does depend on packet size
     return pkt->getSize()/par("decompressionSpeed").doubleValue();
 }
@@ -51,7 +51,7 @@ void Rrh::handleMessage(cMessage *msg)
           else{
               this->startDecompression();
           }
-      }else{
+      } else {
           // new packet from Bbu
           emit(this->rrhJobsSignal, (long)buffer.size());
 
@@ -73,14 +73,9 @@ void Rrh::startDecompression(){
     // !! waiting time expired !!
     emit(this->waitingTimeSignal, simTime() - pkt->getRrhArrivalTime());
 
-    // case compression enabled
-    if ((bool)pkt->getCompression()){
-        simtime_t decompressionTime = this->getDecompressionTime(pkt);
-        scheduleAt(simTime() + decompressionTime , this->beep);
-        EV<<"[RRH] decompressionTime: "<< decompressionTime <<endl;
-    } else {
-        scheduleAt(simTime(), this->beep);
-    }
+    simtime_t decompressionTime = this->getDecompressionTime(pkt);
+    scheduleAt(simTime() + decompressionTime , this->beep);
+    EV<<"[RRH] decompressionTime: "<< decompressionTime <<endl;
 }
 
 void Rrh::finish(){

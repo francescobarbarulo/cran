@@ -20,8 +20,6 @@ simple As
     parameters:
         //N is the number of RRHs
         int N;
-        //if enableCompression is true the message will be decompressed by the RRH
-        bool enableCompression = default(false);
         //if exponentialDistribution is true the size distribution is exponential otherwise is lognormal
         bool exponentialDistribution = default(true);
         //exponential
