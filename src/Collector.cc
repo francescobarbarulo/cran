@@ -13,33 +13,17 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package cran.simulations;
+#include "Collector.h"
 
-import cran.As;
-import cran.Bbu;
-import cran.Rrh;
-import cran.Collector;
+Define_Module(Collector);
 
-network CRan
+void Collector::initialize()
 {
-    parameters:
-        // number of RRHs
-        int numRRH = default(1);
-        @display("bgb=439,306");
-    submodules:
-        as: As {
-            N = numRRH;
-        }
-        bbu: Bbu;
-        rrh[numRRH]: Rrh;
-        collector: Collector {
-            N = numRRH;
-        }
+    this->delaySignal = registerSignal("delay");
+}
 
-    connections:
-        as.out --> bbu.in;
-        for i=0..numRRH-1 {
-            bbu.out++ -->{ delay= 10ms;}--> rrh[i].in;
-            collector.in++ <-- { delay= 10ms;}<-- rrh[i].out;
-        }
+void Collector::handleMessage(cMessage *msg)
+{
+    cranMessage *pkt = check_and_cast<cranMessage*>(msg);
+    emit(this->delaySignal, (simTime() - pkt->getCreationTime()));
 }

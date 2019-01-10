@@ -13,33 +13,21 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package cran.simulations;
+#ifndef __CRAN_COLLECTOR_H_
+#define __CRAN_COLLECTOR_H_
 
-import cran.As;
-import cran.Bbu;
-import cran.Rrh;
-import cran.Collector;
+#include <omnetpp.h>
+#include "cranMessage.h"
 
-network CRan
+using namespace omnetpp;
+
+class Collector : public cSimpleModule
 {
-    parameters:
-        // number of RRHs
-        int numRRH = default(1);
-        @display("bgb=439,306");
-    submodules:
-        as: As {
-            N = numRRH;
-        }
-        bbu: Bbu;
-        rrh[numRRH]: Rrh;
-        collector: Collector {
-            N = numRRH;
-        }
+    private:
+        simsignal_t delaySignal;
+    protected:
+        virtual void initialize();
+        virtual void handleMessage(cMessage *msg);
+};
 
-    connections:
-        as.out --> bbu.in;
-        for i=0..numRRH-1 {
-            bbu.out++ -->{ delay= 10ms;}--> rrh[i].in;
-            collector.in++ <-- { delay= 10ms;}<-- rrh[i].out;
-        }
-}
+#endif

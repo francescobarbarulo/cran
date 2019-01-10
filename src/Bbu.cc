@@ -3,6 +3,7 @@
 
 Define_Module(Bbu);
 
+
 void Bbu::initialize()
 {
     this->beep = new cMessage();

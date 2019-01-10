@@ -13,33 +13,19 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package cran.simulations;
+package cran;
 
-import cran.As;
-import cran.Bbu;
-import cran.Rrh;
-import cran.Collector;
-
-network CRan
+//
+// TODO auto-generated module
+//
+simple Collector
 {
     parameters:
-        // number of RRHs
-        int numRRH = default(1);
-        @display("bgb=439,306");
-    submodules:
-        as: As {
-            N = numRRH;
-        }
-        bbu: Bbu;
-        rrh[numRRH]: Rrh;
-        collector: Collector {
-            N = numRRH;
-        }
-
-    connections:
-        as.out --> bbu.in;
-        for i=0..numRRH-1 {
-            bbu.out++ -->{ delay= 10ms;}--> rrh[i].in;
-            collector.in++ <-- { delay= 10ms;}<-- rrh[i].out;
-        }
+        int N;
+        
+        @signal[delay](type=long);
+   	    @statistic[delayStat](source="delay"; record=vector;mean;);
+    gates:
+    	input in[];
+    
 }

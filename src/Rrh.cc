@@ -24,7 +24,6 @@ void Rrh::initialize()
     this->beep = new cMessage();
 
     // signals registration
-    this->delaySignal = registerSignal("delay");
     this->responseTimeSignal = registerSignal("responseTime");
     this->waitingTimeSignal = registerSignal("waitingTime");
     this->rrhJobsSignal = registerSignal("rrhJobs");
@@ -42,11 +41,10 @@ void Rrh::handleMessage(cMessage *msg)
           // !! response time expired !!
           EV << "end-to-end delay : " << simTime() - prev_pkt->getCreationTime() << endl;
           emit(this->responseTimeSignal, simTime() - prev_pkt->getRrhArrivalTime());
-          emit(this->delaySignal, (simTime() - prev_pkt->getCreationTime()));
           this->recordStatisticsOnFile(prev_pkt);
+          // Send the packet to the collector
+          send(prev_pkt, "out");
 
-          // the packet is consumed
-          delete prev_pkt;
           // RRH checks if there are other packet to be transmitted
           if(this->buffer.empty())
               this->idle = true;

@@ -14,7 +14,7 @@ class Rrh : public cSimpleModule
     std::queue<cranMessage*> buffer;
     bool idle;
     // signals
-    simsignal_t delaySignal;
+
     simsignal_t responseTimeSignal;
     simsignal_t waitingTimeSignal;
     simsignal_t rrhJobsSignal;

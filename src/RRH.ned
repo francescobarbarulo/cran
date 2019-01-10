@@ -22,9 +22,7 @@ simple Rrh
    	    bool dependentDecompressionTime = default(false);
    	    double decompressionSpeed = default(1000);
    	    // signals
-   	    @signal[delay](type=long);
-   	    @statistic[delayStat](source="delay"; record=vector;mean;);
-   	    
+   	      	    
    	    @signal[responseTime](type=long);
    	    @statistic[responseTimeStat](source="responseTime"; record=vector;mean;);
    	    
@@ -35,4 +33,5 @@ simple Rrh
    	    @statistic[rrhJobsStat](source="rrhJobs"; record=vector;mean;);
     gates:
         input in;
+        output out;
 }
