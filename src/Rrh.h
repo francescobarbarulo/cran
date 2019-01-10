@@ -24,6 +24,7 @@ class Rrh : public cSimpleModule
     virtual void finish();
     simtime_t getDecompressionTime(cranMessage *pkt);
     void startDecompression();
+    void recordStatisticsOnFile(cranMessage *pkt);
 };
 
 #endif /* RRH_H_ */

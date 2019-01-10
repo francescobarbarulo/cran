@@ -3,6 +3,13 @@
 
 Define_Module(Rrh);
 
+void Rrh::recordStatisticsOnFile(cranMessage *pkt){
+    std::ofstream file;
+    file.open("delay.csv", std::ofstream::app);
+    file << simTime() << ";" << simTime() - pkt->getCreationTime() << endl;
+    file.close();
+}
+
 simtime_t Rrh::getDecompressionTime(cranMessage *pkt){
     // Compression time does not depend on packet size
     if (!par("dependentDecompressionTime").boolValue())
@@ -26,22 +33,17 @@ void Rrh::initialize()
 void Rrh::handleMessage(cMessage *msg)
 {
     cranMessage *pkt;
-    //std::ofstream file;
 
     if(msg->isSelfMessage()){
           // previous pkt is decompressed and it is removed from the buffer
           cranMessage *prev_pkt = this->buffer.front();
           this->buffer.pop();
 
-          //file.open("system-delay.csv", std::ofstream::app);
-
           // !! response time expired !!
           EV << "end-to-end delay : " << simTime() - prev_pkt->getCreationTime() << endl;
           emit(this->responseTimeSignal, simTime() - prev_pkt->getRrhArrivalTime());
           emit(this->delaySignal, (simTime() - prev_pkt->getCreationTime()));
-
-          //file << simTime() << ";" << simTime() - prev_pkt->getCreationTime() << endl;
-          //file.close();
+          this->recordStatisticsOnFile(prev_pkt);
 
           // the packet is consumed
           delete prev_pkt;
