@@ -26,4 +26,5 @@ void Collector::handleMessage(cMessage *msg)
 {
     cranMessage *pkt = check_and_cast<cranMessage*>(msg);
     emit(this->delaySignal, (simTime() - pkt->getCreationTime()));
+    delete pkt;
 }

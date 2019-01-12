@@ -41,7 +41,7 @@ void Rrh::handleMessage(cMessage *msg)
           // !! response time expired !!
           EV << "end-to-end delay : " << simTime() - prev_pkt->getCreationTime() << endl;
           emit(this->responseTimeSignal, simTime() - prev_pkt->getRrhArrivalTime());
-          this->recordStatisticsOnFile(prev_pkt);
+          //this->recordStatisticsOnFile(prev_pkt);
           // Send the packet to the collector
           send(prev_pkt, "out");
 
