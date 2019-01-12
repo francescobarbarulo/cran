@@ -39,7 +39,7 @@ network CRan
     connections:
         as.out --> bbu.in;
         for i=0..numRRH-1 {
-            bbu.out++ -->{ delay= 10ms;}--> rrh[i].in;
-            collector.in++ <-- { delay= 10ms;}<-- rrh[i].out;
+            bbu.out++ --> rrh[i].in;
+            collector.in++ <-- rrh[i].out;
         }
 }
