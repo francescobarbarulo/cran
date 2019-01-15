@@ -145,4 +145,49 @@ $$ E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} $$
 The successful comparison between the previous equations and the simulator results assure us that we are working on a correct model for our system.
 %?
 
+\section{Simulator implementation}
+The simulator consists of four modules as shown in Figure~\ref{fig:simulator}:
+\begin{itemize}
+  \item \texttt{As}: it creates/produces a packet flow according to the interarrival time and send them to the BBU;
+  \item \texttt{Bbu}: it forwards the packets received from the AS to the RRH, compressed if it has to;
+  \item \texttt{Rrh}: it decompresses the packet, if it was compressed, and send it to the collector for the delay statistics;
+  \item \texttt{Collector}: it handles of the delay statistics.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/simulator}
+    \caption{Simulator architecture}
+    \label{fig:simulator}
+\end{figure}
+
+\subsection{Application Server (AS)}
+The As module has to perform cyclically the following operations:
+\begin{itemize}
+    \item[1.] it creates a new packet with the \texttt{id}, the packet size \texttt{s} taken either from an exponential distribution or a lognormal one, the destination taken from an uniform distribution, the creation time \texttt{created\_at};
+    \item[2.] it sends the packet to the \textit{Bbu};
+    \item[3.] it waits according to the interarrival time \texttt{t} taken from an exponential distribution.
+\end{itemize}
+
+\subsection{Baseband Unit (BBU)}
+When the Bbu module receives a packet from the AS it has to do the following actions:
+\begin{itemize}
+    \item[1.] if it is idle, it processes the packet immediately, otherwise the packet will be queued and served using a FIFO policy;
+    \item[2.] it processes the packet deciding whether the packet must be compressed or not and transmitting it to the proper Rrh;
+    \item[3.] if there are any other packets in the queue, the first of them is pulled off from the buffer and served, otherwise it waits for the next packet.
+\end{itemize}
+
+\subsection{Remote radio (RRH)}
+When one of the N Rrhs receives a packet from the Bbu, it acts as follow:
+\begin{itemize}
+    \item[1.] if it is idle, it processes the packet immediately, otherwise the packet will be queued and served using a FIFO policy;
+    \item[2.] it processes the packet deciding whether the packet must be decompressed or not and transmitting it to the Collector;
+    \item[3.] if there are any other packets in the queue, the first of them is pulled off from the buffer and served, otherwise it waits for the next packet.
+\end{itemize}
+
+
+\subsection{Collector}
+The Collector module (virtually) collects all the packets coming from the RRHs and deals with the end-to-end delay statistics.
+
+
 \end{document}
