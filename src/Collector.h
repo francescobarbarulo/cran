@@ -17,6 +17,7 @@
 #define __CRAN_COLLECTOR_H_
 
 #include <omnetpp.h>
+#include <fstream>
 #include "cranMessage.h"
 
 using namespace omnetpp;
@@ -28,6 +29,7 @@ class Collector : public cSimpleModule
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);
+        void recordStatisticsOnFile(cranMessage *pkt);
 };
 
 #endif

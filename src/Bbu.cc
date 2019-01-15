@@ -7,7 +7,7 @@ Define_Module(Bbu);
 void Bbu::initialize()
 {
     this->beep = new cMessage();
-    this->idle = true;
+    this->server = NULL;
 
     // signals registration
     this->responseTimeSignal = registerSignal("responseTime");
@@ -17,52 +17,48 @@ void Bbu::initialize()
 
 void Bbu::handleMessage(cMessage *msg)
 {
-    cranMessage *pkt;
-
     if(msg->isSelfMessage()){
-        pkt = this->buffer.front();
-        this->buffer.pop();
-        send(pkt, "out", pkt->getDest());
-
         // !! response time expired !!
-        emit(this->responseTimeSignal, simTime() - pkt->getBbuArrivalTime());
+        emit(this->responseTimeSignal, simTime() - this->server->getBbuArrivalTime());
+        send(this->server, "out", this->server->getDest());
 
         // BBU checks if there are other packet to be transmitted
         if(this->buffer.empty())
-            this->idle = true;
-        else{
+            this->server = NULL;
+        else {
+            this->server = this->buffer.front();
+            this->buffer.pop();
             this->beginTransmission();
         }
     } else {
         // new packet from AS
-        emit(this->bbuJobsSignal, (long)this->buffer.size());
+        EV << "jobs in Bbu: " << (long)this->buffer.size() + (int)(bool)this->server << endl;
+        emit(this->bbuJobsSignal, (long)this->buffer.size() + (int)(bool)this->server);
 
-        pkt = check_and_cast<cranMessage*>(msg);
-        this->buffer.push(pkt);
+        cranMessage *pkt = check_and_cast<cranMessage*>(msg);
         pkt->setBbuArrivalTime();
 
-        if(this->idle){
+        if(!this->server){
             // Bbu is idle so it can process the packet immediately
-            this->idle = false;
+            this->server = pkt;
             this->beginTransmission();
+        } else {
+            this->buffer.push(pkt);
         }
     }
 }
 
 void Bbu::beginTransmission(){
-    // extract the first pkt from the buffer
-    cranMessage *pkt = this->buffer.front();
-
     // !! waiting time expired !!
-    emit(this->waitingTimeSignal, simTime() - pkt->getBbuArrivalTime());
+    emit(this->waitingTimeSignal, simTime() - this->server->getBbuArrivalTime());
 
     // case compression enabled
     if (par("enableCompression").boolValue())
-        pkt->compressPkt(par("compressionPercentage").intValue());
+        this->server->compressPkt(par("compressionPercentage").intValue());
 
     // wait for transmission
-    simtime_t transmissionTime = pkt->getSize()/par("speed").doubleValue();
-    EV<<"[BBU] TransmissionTime: "<<transmissionTime<< " - of: "<<pkt->getId()<<endl;
+    simtime_t transmissionTime = this->server->getSize()/par("speed").doubleValue();
+    EV<<"[BBU] TransmissionTime: "<<transmissionTime<< " - of: "<<this->server->getId()<<endl;
     scheduleAt(simTime() + transmissionTime, this->beep);
 }
 
@@ -71,6 +67,9 @@ void Bbu::finish(){
         cancelAndDelete(this->buffer.front());
         this->buffer.pop();
     }
+
+    if (this->server)
+        cancelAndDelete(server);
 
     cancelEvent(this->beep);
     cancelAndDelete(this->beep);

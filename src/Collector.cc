@@ -17,6 +17,13 @@
 
 Define_Module(Collector);
 
+void Collector::recordStatisticsOnFile(cranMessage *pkt){
+    std::ofstream file;
+    file.open("delay.csv", std::ofstream::app);
+    file << simTime() << ";" << simTime() - pkt->getCreationTime() << endl;
+    file.close();
+}
+
 void Collector::initialize()
 {
     this->delaySignal = registerSignal("delay");

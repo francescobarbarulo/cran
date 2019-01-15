@@ -10,9 +10,13 @@ using namespace omnetpp;
 class Bbu : public cSimpleModule
 {
   private:
+    // self-message
     cMessage *beep;
+
+    // service center
     std::queue<cranMessage*> buffer;
-    bool idle;
+    cranMessage *server;
+
     // signals
     simsignal_t responseTimeSignal;
     simsignal_t waitingTimeSignal;

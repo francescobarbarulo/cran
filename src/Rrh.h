@@ -10,11 +10,14 @@ using namespace omnetpp;
 class Rrh : public cSimpleModule
 {
   private:
+    // self-message
     cMessage *beep;
-    std::queue<cranMessage*> buffer;
-    bool idle;
-    // signals
 
+    // service center
+    std::queue<cranMessage*> buffer;
+    cranMessage *server;
+
+    // signals
     simsignal_t responseTimeSignal;
     simsignal_t waitingTimeSignal;
     simsignal_t rrhJobsSignal;
@@ -22,9 +25,8 @@ class Rrh : public cSimpleModule
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
     virtual void finish();
-    simtime_t getDecompressionTime(cranMessage *pkt);
+    simtime_t getDecompressionTime();
     void startDecompression();
-    void recordStatisticsOnFile(cranMessage *pkt);
 };
 
 #endif /* RRH_H_ */
