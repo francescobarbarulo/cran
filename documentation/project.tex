@@ -8,6 +8,7 @@
 \usepackage{tikz}
 \usetikzlibrary{trees}
 \usepackage{url}
+\usepackage{amsmath}
 
 \begin{document}
 {\setstretch{1.0}
@@ -61,8 +62,6 @@ Before introducing the model, we make some semplifications which do not affect t
 First of all we make some assuptions:
 \begin{itemize}
     \item Propagation times ($ T_{prop} $) are negligible;
-    \item In case A, the end-to-end delay is computed when the packet arrives at the RRH;
-    \item In case B, the end-to-end delay is computed until the packet decompression is finished;
     \item BBU switching time (time needed to change the output gate) is negligible;
     \item In case B, the compression time on BBU is negligible;
     \item Packets are not corrupted;
@@ -188,6 +187,74 @@ When one of the N Rrhs receives a packet from the Bbu, it acts as follow:
 
 \subsection{Collector}
 The Collector module (virtually) collects all the packets coming from the RRHs and deals with the end-to-end delay statistics.
+
+\section{Verification}
+The simulator has been verified in order to check for memory leaks and bugs.
+For the first ones we have used Valgrind tool, whereas for bugs we have done some simulations with known results.
+After that we have set proper values, according to some simulation results, for both \texttt{warmup-time} and \texttt{simulation-time-limit}.
+We have estimated the \texttt{warmup-time} according to the mean end-to-end delay values obtained from 10 independent repetitions.
+//figure
+
+In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 20000 seconds, where the steady state is reached. Before each experiment we checked the correctness 
+The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics.
+
+\section{Experiments}
+We will analyze separately the two cases described in section 1 either with exponential and lognormal distribution for the packet size.  
+
+\subsection{Case A - Transmission without compression}
+We have done 10 different repetitions for each single simulation. In this case the end-to-end delay could depend on two factors:
+\begin{itemize}
+	\item \texttt{X} chosen such as $ \rho_{bbu} $, computed as in \eqref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
+	\item \texttt{N} with prefixed values of 2, 5, 10.
+\end{itemize}
+\subsubsection{Exponential}
+Since the exponential distribution does not provide a variance control, the packet size \texttt{s} extracted by the AS could assume both small and large values.
+In Figure~\ref{fig:exp-a} the simulation results are plotted.
+%figura
+As we expected the end-to-end delay does not depend on the number of remote radios \texttt{N}, because on the RRH the service time is null, so there will be no queues and the packets will be forwarded to the cells immediately.
+Hence, the only factor that allows to minimize the end-to-end delay is the BBU transmission speed \texttt{X}.
+
+The end-to-end delay is computed as the sum of the mean BBU waiting time (shown in Figure~\ref{fig:waiting}) and the BBU service time.
+
+%\begin{align}
+%E[R] &= E[R_{bbu}] \notag \\
+%&= E[W_{bbu}] + \frac{1}{\mu_{bbu}} \notag \\
+%\end{align}
+\subsubsection{Lognormal}
+In the lognormal distribution we have used, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution. For this reason the end-to-end (shown in Figure~\ref{fig:log-a}) delay tends to be higher than the previous analysis as $\rho$ increases.
+
+Of course, also in this case, the only meaningful scalable factor is the BBU transmission speed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \end{document}
