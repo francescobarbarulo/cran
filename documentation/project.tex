@@ -35,6 +35,8 @@
 \newpage
 
 \section{Introduction}
+\label{sec:introduciton}
+
 The system examined is a simplified version of an architecture presented for future cellular networks, called Cloud-RAN (CRAN).
 
 \subsection{Description of the system}
@@ -109,12 +111,12 @@ $$s = s\cdot(1-\frac{C}{100})$$
 
 In case B we have also to take in account the stability condition on the RRHs because now the RRH service time is not null and depends on the compression percentage. Furthermore the arrival rate to each RRH depends on the number of remote radios. In fact:
 
-$$ \lambda_{rrh} = \lambda_{bbu} \cdot \pi = \lambda_{bbu} \cdot \frac{1}{N} $$
+$$ \lambda_{rrh} = \lambda_{bbu} \cdot \pi = \frac{1}{t \cdot N} $$
 
 $$ \mu_{rrh} = \frac{1}{C \cdot k}, \quad k = 50ms $$
 
-\begin{equation}
-\rho_{rrh} = \frac{\lambda_{rrh}}{\mu_{rrh}} = \frac{C \cdot k \cdot \lambda_{bbu}}{N} < 1
+\begin{equation} \label{eq:rho-rrh}
+\rho_{rrh} = \frac{\lambda_{rrh}}{\mu_{rrh}} = \frac{C \cdot k}{t \cdot N} < 1
 \end{equation}
 % questo è ok in condizione di stabilità, ma queste SONO le condizioni di stabilità
 
@@ -191,8 +193,9 @@ The Collector module (virtually) collects all the packets coming from the RRHs a
 \section{Verification}
 The simulator has been verified in order to check for memory leaks and bugs.
 For the first ones we have used Valgrind tool, whereas for bugs we have done some simulations with known results.
+
 After that we have set proper values, according to some simulation results, for both \texttt{warmup-time} and \texttt{simulation-time-limit}.
-We have estimated the \texttt{warmup-time} according to the mean end-to-end delay values obtained from 10 independent repetitions.
+We have estimated the \texttt{warmup-time} according to the mean end-to-end delay values obtained from 20 independent repetitions of the highest value of $ \rho_{bbu} $ (0.9).
 
 \begin{figure}[h]
     \centering
@@ -201,14 +204,16 @@ We have estimated the \texttt{warmup-time} according to the mean end-to-end dela
     \label{fig:warm-up-study}
 \end{figure}
 
-In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 20000 seconds, where the steady state is reached. Before each experiment we checked the correctness 
-The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics.
+In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 150000 seconds, where the steady state is reached. 
+
+The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics (2 days of simulation).
 
 \section{Experiments}
-We will analyze separately the two cases described in section 1 either with exponential and lognormal distribution for the packet size.  
+We will analyze separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
+We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, from the stability condition of the \textit{Rrh} computed in \eqref{eq:rho-rrh}, we can not use less than 2 remote radios in order to analyze the case with compression between 10\% and 50\%, that, instead, it is our scope.
 
 \subsection{Case A - Transmission without compression}
-We have done 10 different repetitions for each single simulation. In this case the end-to-end delay could depend on two factors:
+We have done 30 different repetitions for each single scenario. In this case the end-to-end delay could depend on two factors:
 \begin{itemize}
 	\item \texttt{X} chosen such as $ \rho_{bbu} $, computed as in \eqref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
 	\item \texttt{N} with prefixed values of 2, 5, 10.
