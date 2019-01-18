@@ -24,8 +24,7 @@ network CRan
 {
     parameters:
         // number of RRHs
-        int numRRH = default(1);
-        @display("bgb=439,306");
+        int numRRH = default(5);
     submodules:
         as: As {
             N = numRRH;
