@@ -191,12 +191,14 @@ The Collector module (virtually) collects all the packets coming from the RRHs a
 \section{Verification}
 The simulator has been verified in order to check for memory leaks and bugs.
 For the first ones we have used Valgrind tool, whereas for bugs we have done some simulations with known results.
+
 After that we have set proper values, according to some simulation results, for both \texttt{warmup-time} and \texttt{simulation-time-limit}.
-We have estimated the \texttt{warmup-time} according to the mean end-to-end delay values obtained from 10 independent repetitions.
+We have estimated the \texttt{warmup-time} according to the mean end-to-end delay values obtained from 20 independent repetitions of the highest value of $ \rho_{bbu} $ (0.9).
 //figure
 
-In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 20000 seconds, where the steady state is reached. Before each experiment we checked the correctness 
-The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics.
+In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 100000 seconds, where the steady state is reached. 
+
+The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics (2 days of simulation).
 
 \section{Experiments}
 We will analyze separately the two cases described in section 1 either with exponential and lognormal distribution for the packet size.  
