@@ -218,15 +218,13 @@ The value for the \texttt{simulation-time-limit} has been chosen in order to hav
 
 \section{Experiments}
 We will analyze separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
-We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, the number of \textit{RRH} has to verify the stability condition computed in \eqref{eq:rho-rrh}.
+We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, the number of \textit{RRH} has to verify the stability condition computed in \eqref{eq:rho-rrh}. For each case we have done 20 different repetitions for every single scenario.
 
 \subsection{Case A - Transmission without compression}
-We have done 20 different repetitions for each single scenario.
-We have 
 In this case the end-to-end delay could depend on two factors:
 \begin{itemize}
-	\item \texttt{X} chosen such as $ \rho_{bbu} $, computed as in \eqref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
-	\item \texttt{N} with prefixed values of 2, 5, 10.
+	\item \texttt{X}, chosen such as $ \rho_{bbu} $, computed as in \eqref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
+	\item \texttt{N}, with prefixed values of 2, 5, 10.
 \end{itemize}
 \subsubsection{Exponential}
 Since the exponential distribution does not provide a variance control, the packet size \texttt{s}, extracted by the AS, could assume both small and large values.
@@ -251,7 +249,7 @@ Hence, the only factor that allows to minimize the end-to-end delay is the BBU t
 \subsubsection{Lognormal}
 In the lognormal scenario, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution. For this reason the end-to-end delay (shown in Figure~\ref{fig:log-a}) tends to be higher than the previous analysis as \texttt{X} decreases.
 
-Furthermore, we can notice that the confidence interval for lower values of \texttt{X} is wider than the exponential one. This is due to the fact  
+Furthermore, we can notice that the confidence interval for lower values of \texttt{X} ($\rho \simeq 1$) is wider than the exponential one. This is due to the fact that the system is sensitive to an unlucky stream of packet whose size is greater than the mean size value.
 
 \begin{figure}[h]
 	\centering
@@ -261,6 +259,31 @@ Furthermore, we can notice that the confidence interval for lower values of \tex
 \end{figure}
 
 Of course, also in this case, the only meaningful scalable factor is the BBU transmission speed.
+
+The data for both distributions have been tested with a level of confidence interval of 99\%. 
+
+\subsection{Case B - Transmission with compression}
+In addition to the factors of case A, now we have a further factor to take in account: the compression percentage. Hence, the set of factors becomes:
+
+\begin{itemize}
+	\item \texttt{X}, that will assume the same values of case A, but we have to consider that now $ \rho_{bbu} $ depends on the compression percentage because of the smaller number of bytes transmitted. We have chosen these values for the sake of a correct comparison between the two cases.
+	\item \texttt{N}, with values ranging from 2 to 50.
+	\item \texttt{C}, with values ranging from 10 to 90.
+\end{itemize}
+
+\subsubsection{Exponential}
+From \eqref{eq:rho-rrh}, we can see that $ \rho_{rrh} $ does not depend on \texttt{X}, thus we can fix the BBU speed (1000 bytes/s) and compare the results obtained from the variations of \texttt{N} and \texttt{C}. We take into consideration only the waiting time on the RRHs because the service time is constant in relation to C and this would involve only a linear upward translation of the graph.
+
+% SCRIVERE CHE NON CONSIDERIAMO 2 E 3
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/c-vs-waiting}
+	\caption{Waiting time trend in relation to \texttt{C} and \texttt{N}}
+	\label{fig:c-vs-waiting}
+\end{figure}
+
+As the number of RRHs increases, the waiting times tend to flatten around zero becoming independent from the compression percentage.
 
 
 
