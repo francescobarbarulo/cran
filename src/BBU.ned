@@ -23,10 +23,10 @@ simple Bbu
         int compressionPercentage = default(10);
         
         @signal[responseTime](type=long);
-   	    @statistic[responseTimeStat](source="responseTime"; record=mean;);
+   	    @statistic[responseTimeBbuStat](source="responseTime"; record=mean;);
    	    
    	    @signal[waitingTime](type=long);
-   	    @statistic[waitingTimeStat](source="waitingTime"; record=mean;);
+   	    @statistic[waitingTimeBbuStat](source="waitingTime"; record=mean;);
    	    
    	    @signal[bbuJobs](type=long);
    	    @statistic[bbuJobsStat](source="bbuJobs"; record=mean;);
