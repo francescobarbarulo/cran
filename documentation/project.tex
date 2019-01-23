@@ -197,13 +197,11 @@ The simulator has been verified in order to check for memory leaks and bugs.
 For the first ones we have used Valgrind tool, whereas for bugs we have done some simulations with known results.
 
 After that we have set proper values, according to some simulation results, for both \texttt{warmup-time} and \texttt{simulation-time-limit}.
-<<<<<<< HEAD
+
 We have estimated the \texttt{warmup-time} applying the sliding window average (windowSize = ???) to the mean end-to-end delay values obtained from 20 independent repetitions of the highest value of $ \rho_{bbu} $ (0.9).
 //figure
 
 In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around ??? seconds, where the steady state is reached. 
-=======
-We have estimated the \texttt{warmup-time} according to the mean end-to-end delay values obtained from 20 independent repetitions of the highest value of $ \rho_{bbu} $ (0.9).
 
 \begin{figure}[h]
     \centering
@@ -211,9 +209,6 @@ We have estimated the \texttt{warmup-time} according to the mean end-to-end dela
     \caption{Warm-up study}
     \label{fig:warm-up-study}
 \end{figure}
-
-In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 150000 seconds, where the steady state is reached. 
->>>>>>> a4d7b380d24b2b41f2d84f3d6200d50f95d38508
 
 The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics.
 
