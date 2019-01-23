@@ -143,7 +143,7 @@ $$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N -
 
 $$ E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} $$
 %?
-The successful comparison between the previous equations and the simulator results assure us that we are working on a correct model for our system.
+The successful comparison between these equations and the simulator results assure us that we are working on a correct model for our system.
 %?
 
 \section{Simulator implementation}
@@ -192,9 +192,9 @@ The Collector module (virtually) collects all the packets coming from the RRHs a
 
 \section{Verification}
 The simulator has been verified in order to check for memory leaks and bugs.
-For the first ones we have used Valgrind tool, whereas for bugs we have done some simulations with known results.
+For the first ones we have used Valgrind tool, whereas, for bugs, we have done some simulations with known results.
 
-After that we have set proper values, according to some simulation results, for both \texttt{warmup-time} and \texttt{simulation-time-limit}.
+We have set proper values,for both \texttt{warmup-time} and \texttt{simulation-time-limit} according to some simulation results.
 We have estimated the \texttt{warmup-time} according to the mean end-to-end delay values obtained from 20 independent repetitions of the highest value of $ \rho_{bbu} $ (0.9).
 
 \begin{figure}[h]
@@ -210,7 +210,7 @@ The value for the \texttt{simulation-time-limit} has been chosen in order to hav
 
 \section{Experiments}
 We will analyze separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
-We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, from the stability condition of the \textit{Rrh} computed in \eqref{eq:rho-rrh}, we can not use less than 2 remote radios in order to analyze the case with compression between 10\% and 50\%, that, instead, it is our scope.
+We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, from the stability condition of the \textit{Rrh} computed in \eqref{eq:rho-rrh}, we can not use less than 2 remote radios in order to analyze the case with compression between 10\% and 50\%, that, instead, is our scope.
 
 \subsection{Case A - Transmission without compression}
 We have done 30 different repetitions for each single scenario. In this case the end-to-end delay could depend on two factors:
@@ -235,36 +235,6 @@ The end-to-end delay is computed as the sum of the mean BBU waiting time (shown 
 In the lognormal distribution we have used, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution. For this reason the end-to-end (shown in Figure~\ref{fig:log-a}) delay tends to be higher than the previous analysis as $\rho$ increases.
 
 Of course, also in this case, the only meaningful scalable factor is the BBU transmission speed.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
