@@ -109,7 +109,10 @@ $$ \lambda_{bbu} < \mu_{bbu}, \quad \lambda_{bbu} = \frac{1}{t}, \quad \mu_{bbu}
 Note that $s$ represents the number of bytes that the BBU has to transmit. From now on we will consider:
 $$s = s\cdot(1-\frac{C}{100})$$
 
-In case B we have also to take in account the stability condition on the RRHs because now the RRH service time is not null and depends on the compression percentage. Furthermore the arrival rate to each RRH depends on the number of remote radios. In fact:
+In case B we have also to take in account the stability condition on the RRHs because now the RRH service time is not null and depends on the compression percentage. 
+
+We have to guarantee that the arrival rate of the RRHs is poissonian. If we consider just one RRH, the model can be seen as a tandem QN which respects Burke's theorem. Hence, the arrivals at the RRH are a Poisson process with rate $ \lambda_{bbu} $ regardless of the BBU service rate, that, in our simulations, will be both exponential and lognormal. 
+Obviously, this reasoning can be extended in a system with more than one RRH, where the arrival rate will depend on the number of remote radios as follows:
 
 $$ \lambda_{rrh} = \lambda_{bbu} \cdot \pi = \frac{1}{t \cdot N} $$
 
@@ -195,7 +198,7 @@ The simulator has been verified in order to check for memory leaks and bugs.
 For the first ones we have used Valgrind tool, whereas, for bugs, we have done some simulations with known results.
 
 We have set proper values,for both \texttt{warmup-time} and \texttt{simulation-time-limit} according to some simulation results.
-We have estimated the \texttt{warmup-time} according to the mean end-to-end delay values obtained from 20 independent repetitions of the highest value of $ \rho_{bbu} $ (0.9).
+We have estimated the \texttt{warmup-time} applying the sliding window average (windowSize = ???) to the mean end-to-end delay values obtained from 20 independent repetitions of the highest value of $ \rho_{bbu} $ (0.9).
 
 \begin{figure}[h]
     \centering
