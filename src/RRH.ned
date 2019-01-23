@@ -24,13 +24,13 @@ simple Rrh
    	    // signals
    	      	    
    	    @signal[responseTime](type=long);
-   	    @statistic[responseTimeStat](source="responseTime"; record=vector;mean;);
+   	    @statistic[responseTimeStat](source="responseTime"; record=mean;);
    	    
    	    @signal[waitingTime](type=long);
-   	    @statistic[waitingTimeStat](source="waitingTime"; record=vector;mean;);
+   	    @statistic[waitingTimeStat](source="waitingTime"; record=mean;);
    	    
    	    @signal[rrhJobs](type=long);
-   	    @statistic[rrhJobsStat](source="rrhJobs"; record=vector;mean;);
+   	    @statistic[rrhJobsStat](source="rrhJobs"; record=mean;);
     gates:
         input in;
         output out;

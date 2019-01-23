@@ -24,7 +24,7 @@ simple Collector
         int N;
         
         @signal[delay](type=long);
-   	    @statistic[delayStat](source="delay"; record=vector;mean;);
+   	    @statistic[delayStat](source="delay"; record=mean;);
     gates:
     	input in[];
     
