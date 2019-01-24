@@ -5,11 +5,11 @@
 \usepackage{mathtools}
 \usepackage{setspace}
 \usepackage{verbatim}
-\usepackage{tikz}
-\usetikzlibrary{trees}
+\usepackage[htt]{hyphenat}
 \usepackage{url}
 \usepackage{amsmath}
 \usepackage{placeins}
+
 
 \begin{document}
 {\setstretch{1.0}
@@ -139,7 +139,7 @@ Note that the steady state probability on each RRH and on the BBU is equal to an
 % At the steady state, by Burke's theorem, the departure process at the BBU, which is an M/M/1, is a Poisson process with a rate $ \lambda_{bbu} $.
 
 \subsection{Statistics for validation}
-In order to validate our model we have used the subsequent perfomance indexes taken from the queueing theory:
+In order to validate our model we have used the following perfomance indexes taken from the queueing theory:
 
 $$ E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s}$$
 
@@ -155,9 +155,9 @@ The successful comparison between these equations and the simulator results assu
 \section{Simulator implementation}
 The simulator consists of four modules as shown in Figure~\ref{fig:simulator}:
 \begin{itemize}
-  \item \texttt{As}: it creates/produces a packet flow according to the interarrival time and send them to the BBU;
+  \item \texttt{As}: it creates/produces a packet flow according to the interarrival time sending them to the BBU;
   \item \texttt{Bbu}: it forwards the packets received from the AS to the RRH, compressed if it has to;
-  \item \texttt{Rrh}: it decompresses the packet, if it was compressed, and send it to the collector for the delay statistics;
+  \item \texttt{Rrh}: it decompresses the packet, if it was compressed, and sends it to the collector for the delay statistics;
   \item \texttt{Collector}: it handles of the delay statistics.
 \end{itemize}
 
@@ -172,7 +172,7 @@ The simulator consists of four modules as shown in Figure~\ref{fig:simulator}:
 The As module has to perform cyclically the following operations:
 \begin{itemize}
     \item[1.] it creates a new packet with the \texttt{id}, the packet size \texttt{s} taken either from an exponential distribution or a lognormal one, the destination taken from an uniform distribution, the creation time \texttt{created\_at};
-    \item[2.] it sends the packet to the \textit{Bbu};
+    \item[2.] it sends the packet to the BBU;
     \item[3.] it waits according to the interarrival time \texttt{t} taken from an exponential distribution.
 \end{itemize}
 
@@ -180,12 +180,12 @@ The As module has to perform cyclically the following operations:
 When the Bbu module receives a packet from the AS it has to do the following actions:
 \begin{itemize}
     \item[1.] if it is idle, it processes the packet immediately, otherwise the packet will be queued and served using a FIFO policy;
-    \item[2.] it processes the packet deciding whether the packet must be compressed or not and transmitting it to the proper Rrh;
+    \item[2.] it processes the packet deciding whether the packet must be compressed or not and transmitting it to the proper RRH;
     \item[3.] if there are any other packets in the queue, the first of them is pulled off from the buffer and served, otherwise it waits for the next packet.
 \end{itemize}
 
 \subsection{Remote radio (RRH)}
-When one of the N Rrhs receives a packet from the Bbu, it acts as follow:
+When one of the N RRHs receives a packet from the BBU, it acts as follow:
 \begin{itemize}
     \item[1.] if it is idle, it processes the packet immediately, otherwise the packet will be queued and served using a FIFO policy;
     \item[2.] it processes the packet deciding whether the packet must be decompressed or not and transmitting it to the Collector;
@@ -202,7 +202,7 @@ The Collector module (virtually) collects all the packets coming from the RRHs a
 The simulator has been verified in order to check for memory leaks and bugs.
 For the first ones we have used Valgrind tool, whereas, for bugs, we have done some simulations with known results.
 
-We have set proper values,for both \texttt{warmup-time} and \texttt{simulation-time-limit} according to some simulation results.
+We have set proper values, for both \texttt{warmup-time} and \texttt{simulation-time-limit}, according to some simulation results.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/warm-up}
@@ -212,13 +212,13 @@ We have set proper values,for both \texttt{warmup-time} and \texttt{simulation-t
 
 We have estimated the \texttt{warmup-time} applying the sliding window average (windowSize = 10000) to the mean end-to-end delay values obtained from 20 independent repetitions of our highest value of $ \rho_{bbu} $ (0.9). The same reasoning will be applied to the next simulations.
 
-In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 50000 seconds, where the initial transient is over and so steady state is reached. 
+In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 50000 seconds, where the initial transient is over and the steady state is reached. 
 
-The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics (2 days of simulation time).
+The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics (i.e. 2 days of simulation time).
 
 \section{Experiments}
 We will analyze separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
-We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, the number of \textit{RRH} has to verify the stability condition computed in \eqref{eq:rho-rrh}. For each case we have done 20 different repetitions for every single scenario.
+We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, the number of RRH has to verify the stability condition computed in \eqref{eq:rho-rrh}. For each case we have done 20 different repetitions for every single scenario.
 
 \subsection{Case A - Transmission without compression}
 In this case the end-to-end delay could depend on two factors:
@@ -259,8 +259,8 @@ Furthermore, we can notice that the confidence interval for lower values of \tex
 \end{figure}
 
 Of course, also in this case, the only meaningful scalable factor is the BBU transmission speed.
-
-The data for both distributions have been tested with a level of confidence interval of 99\%. 
+\bigbreak
+\noindent The data for both distributions have been tested with a level of confidence interval of 99\%. 
 
 \subsection{Case B - Transmission with compression}
 In addition to the factors of case A, now we have a further factor to take in account: the compression percentage. Hence, the set of factors becomes:
@@ -272,9 +272,9 @@ In addition to the factors of case A, now we have a further factor to take in ac
 \end{itemize}
 
 \subsubsection{Exponential}
-From \eqref{eq:rho-rrh}, we can see that $ \rho_{rrh} $ does not depend on \texttt{X}, thus we can fix the BBU speed (1000 bytes/s) and compare the results obtained from the variations of \texttt{N} and \texttt{C}. We take into consideration only the waiting time on the RRHs because the service time is constant in relation to C and this would involve only a linear upward translation of the graph.
+According to inequality expressed in \eqref{eq:rho-rrh}, $ \rho_{rrh} $ does not depend on \texttt{X}, thus, we can fix the BBU speed (i.e. 1000 bytes/s) and compare the results obtained from the variations of \texttt{N} and \texttt{C}. Futhermore, we need at least 4 RRHs in order to be able to compress up to 90\% keeping $ \rho_{rrh} < 1$. For this reason, we will not show the trend of the waiting time in a system with 2 or 3 RRHs because it would not respect the stability condition.
 
-According to \eqref{eq:rho-rrh}, to maintain $ \rho_{rrh} < 1$, we need at least 4 RRHs in order to be able to compress up to 90\%.
+In Figure~\ref{fig:c-vs-waiting}, we take in account only the waiting time on the RRHs because the service time is constant at same values of compression \texttt{C} which would cause only a linear upward translation of the graph.
 
 \begin{figure}[h]
 	\centering
@@ -283,7 +283,7 @@ According to \eqref{eq:rho-rrh}, to maintain $ \rho_{rrh} < 1$, we need at least
 	\label{fig:c-vs-waiting}
 \end{figure}
 
-As the number of RRHs increases, the waiting times tend to flatten around zero becoming independent from the compression percentage.
+As the number of RRHs increases, the waiting time tends to be constant around zero becoming independent from the compression percentage.
 
 
 
