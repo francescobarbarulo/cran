@@ -10,47 +10,64 @@ rcParams['font.family'] = 'serif'
 import matplotlib.pyplot as plt
 
 def parseCommand():
-	if (len(sys.argv) != 3):
+	const = ['s', 'c', 'n']
+
+	if (len(sys.argv) != 5):
 		sys.exit()
 
-	if (sys.argv[1] != '-name'):
+	if (sys.argv[1] != '-name' or sys.argv[3] != '-const' or sys.argv[4] not in const):
 		sys.exit()
 
-	return sys.argv[2]
+	return sys.argv[2], sys.argv[4]
+
+def setAxes(const):
+	speed = [6667, 3333, 2222, 1667, 1333, 1111, 952, 833, 741]
+	compression = [10, 30, 50, 70, 90]
+	#compression = [0, 10, 30, 50]
+	#numberOfRrh = [2, 3, 4, 5, 6, 10, 20, 30, 50]
+	numberOfRrh = [2, 3, 4, 5, 6, 10]
+
+	if const == 's':
+		return numberOfRrh, compression, 'waitingTimeStat:mean', 'Compression percentage (%)', 'waitingTime (s)' 'Number of Rrhs'
+
+	elif const == 'n':
+		return speed, compression, 'delayStat:mean', 'Compression percentage (%)', 'Delay (s)', 'Speeds'
+
+	else:
+		return speed, numberOfRrh, 'delayStat:mean', 'Number of Rrhs', 'Delay(s)', 'Speeds'
 
 def main():
-	name = parseCommand()
+	name, const = parseCommand()
 	z = 2.845 # level CI 99%
-	compression = [10, 30, 50, 70, 90]
-	numberOfRrh = [4, 5, 6, 10, 20, 30, 50]
 
-	for n in numberOfRrh:
+	line, x, nameStat, xlabel, ylabel, legendTitle = setAxes(const)
+
+	for l in line:
 		y = []
 		yerr = []
-		for c in compression:
-			filename = '../csv/'+name+'-'+str(c)+'-'+str(n)+'.csv'
+		for i in x:
+			filename = '../csv/'+name+'-'+str(l)+'-'+str(i)+'.csv'
 			try:
 				df = pd.read_csv(filename)
-				waiting = df[(df.type=='scalar') & (df.name=='waitingTimeStat:mean')]
+				tmp = df[(df.type=='scalar') & (df.name==nameStat)]
 				
-				mean = stat.mean(waiting.value)
+				mean = stat.mean(tmp.value)
 				y.append(mean)
-				stdev = stat.stdev(waiting.value)
-				e = stdev/math.sqrt(len(waiting.value))*z
+				stdev = stat.stdev(tmp.value)
+				e = stdev/math.sqrt(len(tmp.value))*z
 				yerr.append(e)
 				#print "%s: %f / %f (%d)" % (filename, mean, stdev, len(delay.value))
 				#print delay.value
-			except:
-				print 'Cannot read %s' % filename
-				sys.exit()
+			except Exception, e:
+				print e
 
-		plt.errorbar(compression, y, yerr=yerr, fmt="-*", markeredgecolor='red', capsize=4, linewidth=1)
+		plt.errorbar(x, y, yerr=yerr, fmt="-*", markeredgecolor='red', capsize=4, linewidth=1)
 
 
-	plt.xlabel('Compression percentage (%)')
-	plt.ylabel('waitingTime (s)')
+	plt.xlabel(xlabel)
+	plt.ylabel(ylabel)
 	plt.grid(linestyle='--')
-	plt.legend(numberOfRrh, title='Number of Rrhs')
+	plt.legend(line, title=legendTitle, loc='upper right')
 	plt.show()
 
 

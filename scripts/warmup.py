@@ -8,13 +8,23 @@ from matplotlib import rcParams
 rcParams['font.family'] = 'serif'
 import matplotlib.pyplot as plt
 
+def parseCommand():
+	if len(sys.argv) != 3:
+		sys.exit()
+
+	if sys.argv[1] != '-name':
+		sys.exit()
+
+	return sys.argv[2]
+
 def main():
+	name =  parseCommand()
 	delay = []
 	simTime = []
 
 	window = 10000
 
-	df = pd.read_csv('../csv/warmup.csv', header=None, skiprows=1)
+	df = pd.read_csv('../csv/'+name+'.csv', header=None, skiprows=1)
 
 	for col in df.columns:
 		values = []
@@ -32,7 +42,6 @@ def main():
 
 	plt.xlabel('simTime (s)')
 	plt.ylabel('Delay (s)')
-	plt.yticks(np.arange(0, 50, step=5))
 	plt.ticklabel_format(axis='x', style='sci')
 	plt.grid(linestyle='--')
 	plt.show()
