@@ -286,6 +286,16 @@ In Figure~\ref{fig:c-vs-waiting}, we take in account only the waiting time on th
 As the number of RRHs increases, the waiting time tends to be constant around zero becoming independent from the compression percentage.
 
 
+Hence, for what we noticed in the above consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a short waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/c-vs-delay}
+	\caption{End-to-end delay trend in relation to \texttt{C} and \texttt{X}}
+	\label{fig:c-vs-delay}
+\end{figure}
+
+In Figure~\ref{fig:c-vs-delay} it is shown that as the compression percentage increases, the end-to-end delay tends to become flat, making the BBU speed less significant. Furthermore, also in this experiment where waiting times on the RRHs are minimal, for none of the BBU speeds taken into consideration we have an advantage in setting the compression percentage over 50\%. For this reasoning from now on we will consider the compression percentage with values ranging from 10 to 50 and this allows us to comply the inequality $ \rho_{rrh} < 1$ also for 2 and 3 RRHs.
 
 
 
