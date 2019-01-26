@@ -306,18 +306,29 @@ In both graphs, we take in account only the waiting time on the RRHs because the
 
 As the number of RRHs increases, the waiting time tends to be constant around zero becoming independent from the compression percentage.
 
+Hence, for this consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a negligible waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change.
 
-Hence, for what we noticed in the above consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a negligible waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{images/c-vs-delay}
-	\caption{End-to-end delay trend in relation to \texttt{C} and \texttt{X}}
-	\label{fig:c-vs-delay}
+\begin{figure}[b]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/c-vs-delay}
+  \caption{20 RRHs}
+  \label{fig:c-vs-delay}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/n-vs-delay}
+  \caption{10\% of compression}
+  \label{fig:n-vs-delay}
+\end{subfigure}
+\caption{Delay trend without queueing}
+\label{fig:delay-no-queueing}
 \end{figure}
 
-From Figure~\ref{fig:c-vs-delay}, as the speed increases, the end-to-end delay tends to become linearly dependent on the compression percentage. This means that over a certain speed (i.e. 952 bytes/s) is not convinient to use higher compressions. Furthermore, also in this experiment, where the waiting time on the RRH is negligible, for none of the BBU speeds taken into consideration we have an advantage in setting the compression percentage over 50\%. For this reasoning, from now on, we will consider the compression percentage with values ranging from 10 to 50 allowing us to comply the inequality $ \rho_{rrh} < 1$ even for 2 and 3 RRHs.
+From Figure~\ref{fig:c-vs-delay}, as the speed increases, the end-to-end delay tends to become linearly dependent on the compression percentage. This means that over a certain speed (i.e. 952 bytes/s) is not convinient to use higher compressions. Furthermore, also in this experiment, where the waiting time on the RRH is negligible, for none of the BBU speeds taken into consideration we have an advantage in setting the compression percentage over 50\%. For this reason, from now on, we will consider the compression percentage with values ranging from 10 to 50 allowing us to reach the stability condition even for 2 and 3 RRHs.
 
+% DA FIGURE 6A e 6B SI NOTA CHE QUELLO CHE INFLUISCE DI PIù è IL BINOMIO VELOCITà-COMPRESSIONE
 
 In the final analysis let's look at the trend of the delay when all three factors vary as follows:
 
