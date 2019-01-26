@@ -9,6 +9,9 @@
 \usepackage{url}
 \usepackage{amsmath}
 \usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[bookmarks]{hyperref}
 
 
 \begin{document}
@@ -63,7 +66,8 @@ For a correct evaluation of the system will be taken as reference the mean end-t
 \newpage
 
 \section{Model}
-The model, according to the queueing theory, is the following:
+The model, according to the queueing theory, is shown in Figure~\ref{fig:model}.
+We have $ N + 1 $ service centers, one represents the BBU with its interarrival rate $ \lambda_{bbu} $ and service rate $ \mu_{bbu} $, the other N ones represent the RRHs with their $ \lambda_{rrh} $ and $ \mu_{rrh} $. Packets that leave the BBU have the same probability to reach the i-th RRH (i.e. $ \pi_{i} = \pi \text{ } \forall i $).
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/model}
@@ -80,7 +84,7 @@ We make some semplifications which do not affect the final results:
     \item No packet loss at the buffers (infinite buffers).
 \end{itemize}
 
-With these assumptions, we can compute the end-to-end delay as following:
+With these assumptions, we can compute the end-to-end delay in the following way:
 
 $$ T_{delay} =  T_{waiting\_bbu} + T_{transmission} + T_{waiting\_rrh} + T_{decompression} $$
 
@@ -126,7 +130,7 @@ $$ \mu_{rrh} = \frac{1}{C \cdot k}, \quad k = 50ms $$
 \end{equation}
 % questo è ok in condizione di stabilità, ma queste SONO le condizioni di stabilità
 
-Hence, using the result obtained in \eqref{eq:rho-bbu}, the final stability condition for case B is:
+Hence, using the result obtained in \ref{eq:rho-bbu}, the final stability condition for case B is:
 
 $$ \begin{cases} \rho_{bbu} = \frac{s}{t \cdot X} < 1 \\ \\ \rho_{rrh} = \frac{C \cdot k}{t \cdot N} < 1 \end{cases} $$
 
@@ -218,25 +222,18 @@ The value for the \texttt{simulation-time-limit} has been chosen in order to hav
 
 \section{Experiments}
 We will analyze separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
-We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, the number of RRH has to verify the stability condition computed in \eqref{eq:rho-rrh}. For each case we have done 20 different repetitions for every single scenario.
+We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, the number of RRH has to verify the stability condition computed in \ref{eq:rho-rrh}. For each case we have done 20 different repetitions for every single scenario.
 
 \subsection{Case A - Transmission without compression}
 In this case the end-to-end delay could depend on two factors:
 \begin{itemize}
-	\item \texttt{X}, chosen such as $ \rho_{bbu} $, computed as in \eqref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
+	\item \texttt{X}, chosen such as $ \rho_{bbu} $, computed as in \ref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
 	\item \texttt{N}, with prefixed values of 2, 5, 10.
 \end{itemize}
 \subsubsection{Exponential}
 Since the exponential distribution does not provide a variance control, the packet size \texttt{s}, extracted by the AS, could assume both small and large values.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{images/case-a-exp}
-	\caption{Case A - Exponential distribution}
-	\label{fig:exp-a}
-\end{figure}
-
-In Figure~\ref{fig:exp-a}, as we expected, we can see that the end-to-end delay does not depend on the number of remote radios \texttt{N} because on the RRH the service time is null, so there will be no queues and the packets will be forwarded to the cells immediately.
+In Figure~\ref{fig:case-a-exp}, as we expected, we can see that the end-to-end delay does not depend on the number of remote radios \texttt{N} because on the RRH the service time is null, so there will be no queues and the packets will be forwarded to the cells immediately.
 
 In fact, the three different plots (2, 5 and 10 RRHs) overlap perfectly.
 Hence, the only factor that allows to minimize the end-to-end delay is the BBU transmission speed \texttt{X}.
@@ -247,15 +244,27 @@ Hence, the only factor that allows to minimize the end-to-end delay is the BBU t
 %&= E[W_{bbu}] + \frac{1}{\mu_{bbu}} \notag \\
 %\end{align}
 \subsubsection{Lognormal}
-In the lognormal scenario, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution. For this reason the end-to-end delay (shown in Figure~\ref{fig:log-a}) tends to be higher than the previous analysis as \texttt{X} decreases.
+In the lognormal scenario, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution. For this reason the end-to-end delay (shown in Figure~\ref{fig:case-a-log}) tends to be higher than the previous analysis as \texttt{X} decreases.
 
 Furthermore, we can notice that the confidence interval for lower values of \texttt{X} ($\rho \simeq 1$) is wider than the exponential one. This is due to the fact that the system is sensitive to an unlucky stream of packet whose size is greater than the mean size value.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{images/case-a-logn}
-	\caption{Case A - Lognormal distribution}
-	\label{fig:log-a}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/case-a-exp}
+  \caption{Exponential distribution}
+  \label{fig:case-a-exp}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/case-a-logn}
+  \caption{Lognormal distribution}
+  \label{fig:case-a-log}
+\end{subfigure}
+\caption{Case without compression}
+\label{fig:case-a}
 \end{figure}
 
 Of course, also in this case, the only meaningful scalable factor is the BBU transmission speed.
@@ -272,21 +281,33 @@ In addition to the factors of case A, now we have a further factor to take in ac
 \end{itemize}
 
 \subsubsection{Exponential}
-According to inequality expressed in \eqref{eq:rho-rrh}, $ \rho_{rrh} $ does not depend on \texttt{X}, thus, we can fix the BBU speed (i.e. 1000 bytes/s) and compare the results obtained from the variations of \texttt{N} and \texttt{C}. Futhermore, we need at least 4 RRHs in order to be able to compress up to 90\% keeping $ \rho_{rrh} < 1$. For this reason, we will not show the trend of the waiting time in a system with 2 or 3 RRHs because it would not respect the stability condition.
+According to inequality expressed in \ref{eq:rho-rrh}, $ \rho_{rrh} $ does not depend on \texttt{X}, thus, we can fix the BBU speed (i.e. 1000 bytes/s) and compare the results obtained from the variations of \texttt{N} and \texttt{C}. Futhermore, we need at least 4 RRHs in order to be able to compress up to 90\% keeping $ \rho_{rrh} < 1$. For this reason, we will show the trend of the waiting time in a system with with 4 or more RRHs with a compression percentage up to 90\% (Figure~\ref{fig:c-vs-waiting-1}) and another one with 2 or more RRHs with a compression percentage up to 50\% (Figure~\ref{fig:c-vs-waiting-2}).
 
-In Figure~\ref{fig:c-vs-waiting}, we take in account only the waiting time on the RRHs because the service time is constant at same values of compression \texttt{C} which would cause only a linear upward translation of the graph.
+In both graphs, we take in account only the waiting time on the RRHs because the service time is constant at same values of compression \texttt{C} which would cause only a linear upward translation of the graph.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{images/c-vs-waiting}
-	\caption{Waiting time trend in relation to \texttt{C} and \texttt{N}}
-	\label{fig:c-vs-waiting}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/c-vs-waiting}
+  \caption{\texttt{C} in [10, 90] and \texttt{N} in [4, 50]}
+  \label{fig:c-vs-waiting-1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/c-vs-waiting-from-2}
+  \caption{\texttt{C} in [10, 50] and \texttt{N} in [2, 20]}
+  \label{fig:c-vs-waiting-2}
+\end{subfigure}
+\caption{Waiting time trend in relation to \texttt{C} and \texttt{N}}
+\label{fig:c-vs-waiting}
 \end{figure}
 
 As the number of RRHs increases, the waiting time tends to be constant around zero becoming independent from the compression percentage.
 
 
-Hence, for what we noticed in the above consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a short waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change.
+Hence, for what we noticed in the above consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a negligible waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change.
 
 \begin{figure}[h]
 	\centering
@@ -295,13 +316,13 @@ Hence, for what we noticed in the above consideration, we can fix the number of 
 	\label{fig:c-vs-delay}
 \end{figure}
 
-In Figure~\ref{fig:c-vs-delay} it is shown that as the compression percentage increases, the end-to-end delay tends to become flat, making the BBU speed less significant. Furthermore, also in this experiment where waiting times on the RRHs are minimal, for none of the BBU speeds taken into consideration we have an advantage in setting the compression percentage over 50\%. For this reasoning from now on we will consider the compression percentage with values ranging from 10 to 50 and this allows us to comply the inequality $ \rho_{rrh} < 1$ even for 2 and 3 RRHs.
+From Figure~\ref{fig:c-vs-delay}, as the speed increases, the end-to-end delay tends to become linearly dependent on the compression percentage. This means that over a certain speed (i.e. 952 bytes/s) is not convinient to use higher compressions. Furthermore, also in this experiment, where the waiting time on the RRH is negligible, for none of the BBU speeds taken into consideration we have an advantage in setting the compression percentage over 50\%. For this reasoning, from now on, we will consider the compression percentage with values ranging from 10 to 50 allowing us to comply the inequality $ \rho_{rrh} < 1$ even for 2 and 3 RRHs.
 
 
 In the final analysis let's look at the trend of the delay when all three factors vary as follows:
 
 \begin{itemize}
-	\item \texttt{X}, that will assume the following values: 741, 833, 952; considering that for all the other values there is never any advantage in increasing the compression percentage.
+	\item \texttt{X}, that will assume the following values: 741/833/952 bytes/s; considering that for all the other values there is never any advantage in increasing the compression percentage.
 	\item \texttt{N}, with values ranging from 2 to 20.
 	\item \texttt{C}, with values ranging from 10 to 50.
 \end{itemize}
