@@ -338,29 +338,30 @@ We can observe that, in this case, for BBU speed equal to 952 bytes/s we do not 
 \end{figure}
 
 
-In Figure~\ref{fig:c-vs-delay-741}, . Futhermore, in Figure~\ref{fig:response-time}, we can notice how the ratio between the two response times changes increasing the number of RRH or the compression percentage.
+Figure~\ref{fig:c-vs-delay-741} shows that the value of \texttt{C}, that minimize the end-to-end delay, increases as \texttt{N} goes up. This is due to the fact that the workload is evenly distributed among the increasing number of remote radios. In Figure~\ref{fig:response-time} it is clearly shown how the delay is subdivided between BBU and remote radios.
 
-% Fixed \texttt{N}, as \texttt{C} increases, the RRH response time affects mainly the end-to-end delay.
-
-
-\begin{figure}[b]
+\begin{figure}[h]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=\linewidth]{images/response-time-2}
-  \caption{Ratio with 2 RRHs}
+  \caption{2 RRHs}
   \label{fig:response-time-2}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=\linewidth]{images/response-time-10}
-  \caption{Ratio with 10 RRHs}
+  \caption{10 RRHs}
   \label{fig:response-time-10}
 \end{subfigure}
-\caption{}
+\caption{End-to-end delay ratio}
 \label{fig:response-time}
 \end{figure}
 
+\newpage
 
+\subsubsection{Lognormal}
+
+\subsection{Comparison and conclusions}
 
 \end{document}
