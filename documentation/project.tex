@@ -281,62 +281,86 @@ In addition to the factors of case A, now we have a further factor to take in ac
 \end{itemize}
 
 \subsubsection{Exponential}
-According to inequality expressed in \ref{eq:rho-rrh}, $ \rho_{rrh} $ does not depend on \texttt{X}, thus, we can fix the BBU speed (i.e. 1000 bytes/s) and compare the results obtained from the variations of \texttt{N} and \texttt{C}. Futhermore, we need at least 4 RRHs in order to be able to compress up to 90\% keeping $ \rho_{rrh} < 1$. For this reason, we will show the trend of the waiting time in a system with with 4 or more RRHs with a compression percentage up to 90\% (Figure~\ref{fig:c-vs-waiting-1}) and another one with 2 or more RRHs with a compression percentage up to 50\% (Figure~\ref{fig:c-vs-waiting-2}).
-
-In both graphs, we take in account only the waiting time on the RRHs because the service time is constant at same values of compression \texttt{C} which would cause only a linear upward translation of the graph.
-
+According to inequality expressed in \ref{eq:rho-rrh}, $ \rho_{rrh} $ does not depend on \texttt{X}, thus, we can fix the BBU speed (i.e. 1000 bytes/s) and compare the waiting times obtained from the variations of \texttt{N} and \texttt{C}. In Figure~\ref{fig:c-vs-waiting-1} we can see the waiting time trend for compression values up to 90\% keeping in mind that we need at least 4 RRHs in order to satisfy the stability condition.
 
 \begin{figure}
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=\linewidth]{images/c-vs-waiting}
-  \caption{\texttt{C} in [10, 90] and \texttt{N} in [4, 50]}
+  \caption{Waiting time in relation to \texttt{C} and \texttt{N}}
   \label{fig:c-vs-waiting-1}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{images/c-vs-waiting-from-2}
-  \caption{\texttt{C} in [10, 50] and \texttt{N} in [2, 20]}
-  \label{fig:c-vs-waiting-2}
+  \includegraphics[width=\linewidth]{images/c-vs-delay}
+  \caption{Delay with 20 RRHs}
+  \label{fig:c-vs-delay}
 \end{subfigure}
-\caption{Waiting time trend in relation to \texttt{C} and \texttt{N}}
-\label{fig:c-vs-waiting}
+\caption{}
+\label{fig:waiting-and-delay}
 \end{figure}
 
 As the number of RRHs increases, the waiting time tends to be constant around zero becoming independent from the compression percentage.
 
-Hence, for this consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a negligible waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change.
+Hence, for this consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a negligible waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change (Figure~\ref{fig:c-vs-delay}).
 
 \begin{figure}[b]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{images/c-vs-delay}
-  \caption{20 RRHs}
-  \label{fig:c-vs-delay}
+  \includegraphics[width=\linewidth]{images/c-vs-waiting-from-2}
+  \caption{Waiting time in relation to \texttt{C} and \texttt{N}}
+  \label{fig:c-vs-waiting-2}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{images/n-vs-delay}
-  \caption{10\% of compression}
-  \label{fig:n-vs-delay}
+  \includegraphics[width=\linewidth]{images/worst-case}
+  \caption{Delay with 2 RRHs}
+  \label{fig:worst-case}
 \end{subfigure}
-\caption{Delay trend without queueing}
-\label{fig:delay-no-queueing}
+\caption{}
+\label{fig:waiting-and-delay-2}
 \end{figure}
 
-From Figure~\ref{fig:c-vs-delay}, as the speed increases, the end-to-end delay tends to become linearly dependent on the compression percentage. This means that over a certain speed (i.e. 952 bytes/s) is not convinient to use higher compressions. Furthermore, also in this experiment, where the waiting time on the RRH is negligible, for none of the BBU speeds taken into consideration we have an advantage in setting the compression percentage over 50\%. For this reason, from now on, we will consider the compression percentage with values ranging from 10 to 50 allowing us to reach the stability condition even for 2 and 3 RRHs.
+As the speed increases (i.e. from 1111 bytes/s), the end-to-end delay tends to become a monotonically increasing function and it is not convenient to use higher compressions. Furthermore, also in this experiment where the waiting time on the RRH is negligible, for none of the BBU speeds taken into consideration there are not any advantages in setting the compression percentage over 50\%. For this reason, from now on, we will consider the compression percentage with values ranging from 10\% to 50\% allowing us to reach the stability condition even for 2 and 3 RRHs (Figure~\ref{fig:c-vs-waiting-2}).
 
-% DA FIGURE 6A e 6B SI NOTA CHE QUELLO CHE INFLUISCE DI PIù è IL BINOMIO VELOCITà-COMPRESSIONE
+Now we want to analyze the system with 2 RRHs, when we have the highest RRH waiting time, to see whether, with low BBU speeds, we still have advantages in increasing the compression percentage (Figure~\ref{fig:worst-case}).
 
-In the final analysis let's look at the trend of the delay when all three factors vary as follows:
+We can observe that, in this case, for BBU speed equal to 952 bytes/s we do not have advantages in increasing \texttt{C} unlike the case shown in Figure~\ref{fig:c-vs-delay}. Instead, we still have advantages for both BBU speed values of 833 bytes/s and 741 bytes/s, the latter will be taken as example of our next study, where we are interested in seeing which is the best compression value for each meaningful \texttt{N}.
 
-\begin{itemize}
-	\item \texttt{X}, that will assume the following values: 741/833/952 bytes/s; considering that for all the other values there is never any advantage in increasing the compression percentage.
-	\item \texttt{N}, with values ranging from 2 to 20.
-	\item \texttt{C}, with values ranging from 10 to 50.
-\end{itemize}
+\begin{figure}[h]
+\centering
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/c-vs-delay-741}
+  \caption{Waiting time in relation to \texttt{C} and \texttt{N}}
+  \label{fig:c-vs-delay-741}
+\end{figure}
+
+
+In Figure~\ref{fig:c-vs-delay-741}, . Futhermore, in Figure~\ref{fig:response-time}, we can notice how the ratio between the two response times changes increasing the number of RRH or the compression percentage.
+
+% Fixed \texttt{N}, as \texttt{C} increases, the RRH response time affects mainly the end-to-end delay.
+
+
+\begin{figure}[b]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/response-time-2}
+  \caption{Ratio with 2 RRHs}
+  \label{fig:response-time-2}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/response-time-10}
+  \caption{Ratio with 10 RRHs}
+  \label{fig:response-time-10}
+\end{subfigure}
+\caption{}
+\label{fig:response-time}
+\end{figure}
+
 
 
 \end{document}
