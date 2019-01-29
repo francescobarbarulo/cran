@@ -128,7 +128,6 @@ $$ \mu_{rrh} = \frac{1}{C \cdot k}, \quad k = 50ms $$
 \begin{equation} \label{eq:rho-rrh}
 \rho_{rrh} = \frac{\lambda_{rrh}}{\mu_{rrh}} = \frac{C \cdot k}{t \cdot N} < 1
 \end{equation}
-% questo è ok in condizione di stabilità, ma queste SONO le condizioni di stabilità
 
 Hence, using the result obtained in \ref{eq:rho-bbu}, the final stability condition for case B is:
 
@@ -140,8 +139,6 @@ $$ p_{n} = \rho^n \cdot (1 - \rho) $$
 
 Note that the steady state probability on each RRH and on the BBU is equal to an M/M/1.
 
-% At the steady state, by Burke's theorem, the departure process at the BBU, which is an M/M/1, is a Poisson process with a rate $ \lambda_{bbu} $.
-
 \subsection{Statistics for validation}
 In order to validate our model we have used the following perfomance indexes taken from the queueing theory:
 
@@ -152,9 +149,8 @@ $$ E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} $$
 $$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N - C \cdot k}$$
 
 $$ E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} $$
-%?
+
 The successful comparison between these equations and the simulator results assure us that we are working on a correct model for our system.
-%?
 
 \section{Simulator implementation}
 The simulator consists of four modules as shown in Figure~\ref{fig:simulator}:
@@ -236,7 +232,7 @@ Since the exponential distribution does not provide a variance control, the pack
 In Figure~\ref{fig:case-a-exp}, as we expected, we can see that the end-to-end delay does not depend on the number of remote radios \texttt{N} because on the RRH the service time is null, so there will be no queues and the packets will be forwarded to the cells immediately.
 
 In fact, the three different plots (2, 5 and 10 RRHs) overlap perfectly.
-Hence, the only factor that allows to minimize the end-to-end delay is the BBU transmission speed \texttt{X}.
+Hence, the end-to-end delay corresponds only to the BBU response time, so the only factor that allows us to minimize the end-to-end delay is the BBU transmission speed \texttt{X}.
 
 
 %\begin{align}
@@ -333,7 +329,7 @@ We can observe that, in this case, for BBU speed equal to 952 bytes/s we do not 
 \centering
   \centering
   \includegraphics[width=0.5\textwidth]{images/c-vs-delay-741}
-  \caption{Waiting time in relation to \texttt{C} and \texttt{N}}
+  \caption{Delay in relation to \texttt{C} and \texttt{N}, with \texttt{X}=741bytes/s}
   \label{fig:c-vs-delay-741}
 \end{figure}
 
@@ -361,7 +357,46 @@ Figure~\ref{fig:c-vs-delay-741} shows that the value of \texttt{C}, that minimiz
 \newpage
 
 \subsubsection{Lognormal}
+As we have seen in case A, for $\rho \simeq 1$ (in our case \texttt{X}=741bytes/s), the end-to-end delay, which is affected only by the BBU response time, assumed very high values and suffered a large variance. In case B we will not have anymore this situation due to the fact that the BBU transmits less bytes depending on \texttt{C}. Considering that $\rho_{bbu}$ is computed as in \ref{eq:rho-bbu} and \texttt{s} is reduced by \texttt{C}, its value (for equal \texttt{X} of case A) will be lower and consequently the BBU will stabilize first (Figure~\ref{fig:c-vs-resp-741-logn}).
 
-\subsection{Comparison and conclusions}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/response-time-bbu-741-logn}
+	\caption{BBU response time lognormal distribution in relation to \texttt{C}, with \texttt{X}=741bytes/s}
+	\label{fig:c-vs-resp-741-logn}
+\end{figure}
+
+By Burke's theorem the lognormal distribution will affect only the BBU statistics, that are similar to the exponential ones (Figure~\ref{fig:c-vs-response-time-bbu}). To confirm this we saw that, as the RRHs behavior will not be affected by a different distribution, the two configurations of the system gave similar trends. 
+
+When $\rho_{bbu}$ goes up the performance of the lognormal distribution is worse than the exponential one, instead for lower values of $\rho_{bbu}$ we have a slightly increased performance. However, due to the trends redundancy, for the lognormal distribution we can refer to the exponential study.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/c-vs-response-time-bbu-exp}
+		\caption{Exponential distribution}
+		\label{fig:c-vs-response-time-bbu-exp}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/c-vs-response-time-bbu-logn}
+		\caption{Lognormal distribution}
+		\label{fig:c-vs-response-time-bbu-logn}
+	\end{subfigure}
+	\caption{BBU response time in relation to \texttt{C} and \texttt{X}}
+	\label{fig:c-vs-response-time-bbu}
+\end{figure}
+
+\subsection{Comparison}
+
+
+
+\section{Conclusions}
+
+
+
+
+
 
 \end{document}
