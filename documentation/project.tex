@@ -365,7 +365,7 @@ As we have seen in case A, for $\rho \simeq 1$ (in our case \texttt{X}=741bytes/
 	\label{fig:c-vs-resp-741-logn}
 \end{figure}
 
-By Burke's theorem the lognormal distribution will affect only the BBU statistics, that are similar to the exponential ones (Figure~\ref{fig:c-vs-response-time-bbu}). To confirm this we saw that, as the RRHs behavior will not be affected by a different distribution, the two configurations of the system gave similar trends. 
+By Burke's theorem the lognormal distribution will affect only the BBU statistics, that are similar to the exponential ones (Figure~\ref{fig:c-vs-response-time-bbu}). As the RRHs behavior will not be affected by a different distribution, the two configurations of the system gave similar trends. 
 
 When $\rho_{bbu}$ goes up the performance of the lognormal distribution is worse than the exponential one, instead for lower values of $\rho_{bbu}$ we have a slightly increased performance. However, due to the trends redundancy, for the lognormal distribution we can refer to the exponential study.
 
@@ -389,8 +389,29 @@ When $\rho_{bbu}$ goes up the performance of the lognormal distribution is worse
 
 \subsection{Comparison}
 
+The main objective of this study is to establish when and with which compression percentage we can have lower values of the end-to-end delay. As we have seen, for \texttt{C} equal to 0, \texttt{N} is irrelevant for the puposes of the end-to-end delay study, and in Figure~\ref{fig:c-vs-delay-741} is shown that for \texttt{N} greater than 5 the delay behaviors tends to comply. Hence for the comparison study we fix \texttt{N} equal to 5. 
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/c-vs-delay-comparison}
+	\caption{Delay in relation to \texttt{C}, \texttt{N} = 5} 
+	\label{fig:c-vs-delay-comparison}
+\end{figure}
 
+For a certain \texttt{X} value onward, in our case 1111 bytes/s, we will not have any benefits in using this compression algorithm because the time saved in transmitting lower number of bytes is not rewarded by the longer time spent on the RRH.
+On the other hand, below this \texttt{X} value, the compression increases the performance. 
+
+From Figure~\ref{fig:c-vs-delay-comparison} we can only estimate an interval of \texttt{C} where we obtain the lower delay for a given \texttt{X}; for the exponential distribution we could obtain a more accurate value studying the following inequality, remembering that the RRH response time is null when there is no compression:
+
+\begin{equation} \label{eq:inequality}
+E[R_{bbu}]_{comp} + E[R_{rrh}] < E[R_{bbu}]
+\end{equation}
+\\
+Considering \texttt{C} as variable and fixing \texttt{N} and \texttt{X}, we obtain a parabolic function whose vertex gives us the optimal compression percentage.
+
+For example, with \texttt{X} = 741 bytes/s, from the graph we can estimate the best value of \texttt{C} between 30\% and 50\%. The computation of \ref{eq:inequality} confirms our estimation giving 48\% as result.
+
+\newpage
 \section{Conclusions}
 
 
