@@ -59,6 +59,13 @@ Packet size and interarrivals are random variables described as:
 	\item exponential and lognormal distribution of $s$.
 \end{itemize}
 
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/cran}
+    \caption{C-RAN}
+    \label{fig:cran}
+\end{figure}
+
 \subsection{Objectives and performance indexes}
 The objective of the study is to determine if and under which conditions it is better to perform packet compression or not.
 For a correct evaluation of the system will be taken as reference the mean end-to-end delay of packets.
@@ -70,7 +77,7 @@ The model based to the queueing theory is shown in Figure~\ref{fig:model}.
 We have $ N + 1 $ service centers, one represents the BBU with its interarrival rate $ \lambda_{bbu} $, which corresponds to the external arrival rate $ \gamma $ of the whole system, and service rate $ \mu_{bbu} $, the other N ones represent the RRHs with their $ \lambda_{rrh} $ and $ \mu_{rrh} $. Packets that leave the BBU have the same probability to reach the i-th RRH (i.e. $ \pi_{i} = \pi \text{ } \forall i $).
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\textwidth]{images/model}
+	\includegraphics[width=0.6\textwidth]{images/model}
 	\caption{Queueing network model}
 	\label{fig:model}
 \end{figure}
@@ -86,7 +93,7 @@ We make some semplifications which do not affect the final results:
 
 With these assumptions, we can compute the end-to-end delay in the following way:
 
-% IO METTEREI I MEAN
+% METTERE I MEAN?
 
 $$ T_{delay} =  T_{waiting\_bbu} + T_{transmission} + T_{waiting\_rrh} + T_{decompression} $$
 
@@ -148,6 +155,7 @@ In order to validate our model we have used the following perfomance indexes tak
 $$ E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s} \text{, } E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} =  \frac{s \cdot t}{X \cdot t - s}$$
 
 $$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N - C \cdot k} \text{, } E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} = \frac{C \cdot k \cdot t \cdot N}{t \cdot N - C \cdot k}$$
+\\
 
 The successful comparison between these equations and the simulator results assure us that we are working on a correct model for our system.
 
@@ -162,7 +170,7 @@ The simulator consists of four modules as shown in Figure~\ref{fig:simulator}:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/simulator}
+    \includegraphics[width=0.6\textwidth]{images/simulator}
     \caption{Simulator architecture}
     \label{fig:simulator}
 \end{figure}
@@ -195,8 +203,6 @@ When one of the N RRHs receives a packet from the BBU, it acts as follow:
 \subsection{Collector}
 The Collector module (virtually) collects all the packets coming from the RRHs and deals with the end-to-end delay statistics.
 
-
-
 \section{Verification}
 The simulator has been verified in order to check for memory leaks and bugs.
 For the first ones we have used Valgrind tool, whereas, for bugs, we have done some simulations with known results.
@@ -204,7 +210,7 @@ For the first ones we have used Valgrind tool, whereas, for bugs, we have done s
 We have set proper values, for both \texttt{warmup-time} and \texttt{simulation-time-limit}, according to some simulation results.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\textwidth]{images/warm-up}
+	\includegraphics[width=0.6\textwidth]{images/warm-up}
 	\caption{Warm-up study}
 	\label{fig:warm-up-study}
 \end{figure}
