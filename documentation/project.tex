@@ -1,4 +1,5 @@
 \documentclass[11pt,a4paper,oneside, openright]{article}
+\usepackage[left=3cm,right=3cm, top=3cm, bottom=3cm]{geometry}
 \usepackage{graphicx}
 \usepackage[british]{babel}
 \usepackage[utf8]{inputenc}
@@ -59,15 +60,14 @@ Packet size and interarrivals are random variables described as:
 \end{itemize}
 
 \subsection{Objectives and performance indexes}
-???
 The objective of the study is to determine if and under which conditions it is better to perform packet compression or not.
 For a correct evaluation of the system will be taken as reference the mean end-to-end delay of packets.
 
 \newpage
 
 \section{Model}
-The model, according to the queueing theory, is shown in Figure~\ref{fig:model}.
-We have $ N + 1 $ service centers, one represents the BBU with its interarrival rate $ \lambda_{bbu} $ and service rate $ \mu_{bbu} $, the other N ones represent the RRHs with their $ \lambda_{rrh} $ and $ \mu_{rrh} $. Packets that leave the BBU have the same probability to reach the i-th RRH (i.e. $ \pi_{i} = \pi \text{ } \forall i $).
+The model based to the queueing theory is shown in Figure~\ref{fig:model}.
+We have $ N + 1 $ service centers, one represents the BBU with its interarrival rate $ \lambda_{bbu} $, which corresponds to the external arrival rate $ \gamma $ of the whole system, and service rate $ \mu_{bbu} $, the other N ones represent the RRHs with their $ \lambda_{rrh} $ and $ \mu_{rrh} $. Packets that leave the BBU have the same probability to reach the i-th RRH (i.e. $ \pi_{i} = \pi \text{ } \forall i $).
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/model}
@@ -77,14 +77,16 @@ We have $ N + 1 $ service centers, one represents the BBU with its interarrival 
 
 We make some semplifications which do not affect the final results:
 \begin{itemize}
-    \item Propagation times ($ T_{prop} $) are negligible;
+    \item time to reach the next service center is negligible;
     \item BBU switching time (time needed to change the output gate) is negligible;
-    \item In case B, the compression time on BBU is negligible;
-    \item Packets are not corrupted;
-    \item No packet loss at the buffers (infinite buffers).
+    \item compression time on BBU is negligible;
+    \item packets are not corrupted;
+    \item no packet loss at the buffers (infinite buffers).
 \end{itemize}
 
 With these assumptions, we can compute the end-to-end delay in the following way:
+
+% IO METTEREI I MEAN
 
 $$ T_{delay} =  T_{waiting\_bbu} + T_{transmission} + T_{waiting\_rrh} + T_{decompression} $$
 
@@ -102,10 +104,10 @@ The simulator has been validated through a comparison with a queueing theory mod
 The system has been modelled as an Open Jackson Network because all the hypotheses are verified since external arrivals are poissonian and routing probabilities are state-independent because they are uniform as specified in the requirements.
 
 \subsubsection{Stability conditions}
-In order to compute the stabilty conditions we have to distinguish between the two cases.
+In order to compute the stabilty conditions we have to distinguish between the two cases. In all equations we use the mean value of parameters and factors.
 
 In case A we have to respect only one condition regarding the BBU. Indeed, on the RRHs we will never have queues because when the packet arrives it is immediately consumed.
-Hence, the stability condition is the following:
+Hence, the stability condition for the whole system, without compression, is the following:
 
 $$ \lambda_{bbu} < \mu_{bbu}, \quad \lambda_{bbu} = \frac{1}{t}, \quad \mu_{bbu} = \frac{X}{s}$$
 
@@ -113,13 +115,14 @@ $$ \lambda_{bbu} < \mu_{bbu}, \quad \lambda_{bbu} = \frac{1}{t}, \quad \mu_{bbu}
 \rho_{bbu} = \frac{\lambda_{bbu}}{\mu_{bbu}} = \frac{s}{t \cdot X} < 1
 \end{equation}
 
-Note that $s$ represents the number of bytes that the BBU has to transmit. From now on we will consider:
-$$s = s\cdot(1-\frac{C}{100})$$
+Note that $s$ represents the number of bytes that the BBU has to transmit:
+$$s = s_{original}\cdot(1-\frac{C}{100})$$
 
-In case B we have also to take in account the stability condition on the RRHs because now the RRH service time is not null and depends on the compression percentage. 
+In case B we have also to take in account the stability condition on the RRHs because, in a system that foresees compression, the RRH service time is not null and depends on the compression percentage. 
 
-We have to guarantee that the arrival rate of the RRHs is poissonian. If we consider just one RRH, the model can be seen as a tandem QN which respects Burke's theorem. Hence, the arrivals at the RRH are a Poisson process with rate $ \lambda_{bbu} $ regardless of the BBU service rate, that, in our simulations, will be both exponential and lognormal. 
-Obviously, this reasoning can be extended in a system with more than one RRH, where the arrival rate will depend on the number of remote radios as follows:
+Moreover, we have to consider the arrival rate on RRHs.
+We have to guarantee that the latter is poissonian. If we consider just one RRH, the model can be seen as a tandem QN which respects Burke's theorem, since queues are infinte by our semplifications. Hence, the arrival rate at the RRH is a Poisson process with rate $ \lambda_{bbu} $ regardless of the BBU service rate, that, in our simulations, will be both exponential and lognormal. 
+In a system with more than one RRH, any probabilistic splitting of a Poissonian process still originates Poissonian processes. Each RRH arrival rate will depend on the $ \lambda_{bbu} $ and on the number of remote radios as follows:
 
 $$ \lambda_{rrh} = \lambda_{bbu} \cdot \pi = \frac{1}{t \cdot N} $$
 
@@ -142,13 +145,9 @@ Note that the steady state probability on each RRH and on the BBU is equal to an
 \subsection{Statistics for validation}
 In order to validate our model we have used the following perfomance indexes taken from the queueing theory:
 
-$$ E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s}$$
+$$ E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s} \text{, } E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} =  \frac{s \cdot t}{X \cdot t - s}$$
 
-$$ E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} $$
-
-$$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N - C \cdot k}$$
-
-$$ E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} $$
+$$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N - C \cdot k} \text{, } E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} = \frac{C \cdot k \cdot t \cdot N}{t \cdot N - C \cdot k}$$
 
 The successful comparison between these equations and the simulator results assure us that we are working on a correct model for our system.
 
