@@ -124,8 +124,9 @@ $$ \lambda_{bbu} < \mu_{bbu}, \quad \lambda_{bbu} = \frac{1}{t}, \quad \mu_{bbu}
 
 Note that $s$ represents the number of bytes that the BBU has to transmit:
 $$s = s_{original}\cdot(1-\frac{C}{100})$$
+where $ s_{original} $ is the mean original packet size not compressed.
 
-In case B we have also to take in account the stability condition on the RRHs because, in a system that foresees compression, the RRH service time is not null and depends on the compression percentage. 
+In case B we have also to take in account the stability condition on the RRHs because, in a system that foresees the use of some compression algorithm, the RRH service time is not null and depends on the compression percentage. In the BBU, since compression time is negligible, its stability condition does not change. 
 
 Moreover, we have to consider the arrival rate on RRHs.
 We have to guarantee that the latter is poissonian. If we consider just one RRH, the model can be seen as a tandem QN which respects Burke's theorem, since queues are infinte by our semplifications. Hence, the arrival rate at the RRH is a Poisson process with rate $ \lambda_{bbu} $ regardless of the BBU service rate, that, in our simulations, will be both exponential and lognormal. 
@@ -152,10 +153,9 @@ Note that the steady state probability on each RRH and on the BBU is equal to an
 \subsection{Statistics for validation}
 In order to validate our model we have used the following perfomance indexes taken from the queueing theory:
 
-$$ E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s} \text{, } E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} =  \frac{s \cdot t}{X \cdot t - s}$$
+$$ E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s} \qquad E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} =  \frac{s \cdot t}{X \cdot t - s}$$
 
-$$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N - C \cdot k} \text{, } E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} = \frac{C \cdot k \cdot t \cdot N}{t \cdot N - C \cdot k}$$
-\\
+$$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N - C \cdot k} \qquad E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} = \frac{C \cdot k \cdot t \cdot N}{t \cdot N - C \cdot k}$$
 
 The successful comparison between these equations and the simulator results assure us that we are working on a correct model for our system.
 
@@ -163,9 +163,9 @@ The successful comparison between these equations and the simulator results assu
 The simulator consists of four modules as shown in Figure~\ref{fig:simulator}:
 \begin{itemize}
   \item \texttt{As}: it creates/produces a packet flow according to the interarrival time sending them to the BBU;
-  \item \texttt{Bbu}: it forwards the packets received from the AS to the RRH, compressed if it has to;
+  \item \texttt{Bbu}: it forwards the packets received from the AS to the RRH, compressing the packet if it has to;
   \item \texttt{Rrh}: it decompresses the packet, if it was compressed, and sends it to the collector for the delay statistics;
-  \item \texttt{Collector}: it handles of the delay statistics.
+  \item \texttt{Collector}: it handles the delay statistics.
 \end{itemize}
 
 \begin{figure}[h]
@@ -178,7 +178,7 @@ The simulator consists of four modules as shown in Figure~\ref{fig:simulator}:
 \subsection{Application Server (AS)}
 The As module has to perform cyclically the following operations:
 \begin{itemize}
-    \item[1.] it creates a new packet with the \texttt{id}, the packet size \texttt{s} taken either from an exponential distribution or a lognormal one, the destination taken from an uniform distribution, the creation time \texttt{created\_at};
+    \item[1.] it creates a new packet with the \texttt{id}, the packet size \texttt{size} taken either from an exponential distribution or a lognormal one, the destination \texttt{dest} taken from an uniform distribution, the creation time \texttt{created\_at};
     \item[2.] it sends the packet to the BBU;
     \item[3.] it waits according to the interarrival time \texttt{t} taken from an exponential distribution.
 \end{itemize}
@@ -192,7 +192,7 @@ When the Bbu module receives a packet from the AS it has to do the following act
 \end{itemize}
 
 \subsection{Remote radio (RRH)}
-When one of the N RRHs receives a packet from the BBU, it acts as follow:
+When one of the N RRHs receives a packet from the BBU, it acts as follows:
 \begin{itemize}
     \item[1.] if it is idle, it processes the packet immediately, otherwise the packet will be queued and served using a FIFO policy;
     \item[2.] it processes the packet deciding whether the packet must be decompressed or not and transmitting it to the Collector;
@@ -201,7 +201,7 @@ When one of the N RRHs receives a packet from the BBU, it acts as follow:
 
 
 \subsection{Collector}
-The Collector module (virtually) collects all the packets coming from the RRHs and deals with the end-to-end delay statistics.
+The Collector module collects all the packets coming from the RRHs and deals with the end-to-end delay statistics.
 
 \section{Verification}
 The simulator has been verified in order to check for memory leaks and bugs.
@@ -215,15 +215,16 @@ We have set proper values, for both \texttt{warmup-time} and \texttt{simulation-
 	\label{fig:warm-up-study}
 \end{figure}
 
-We have estimated the \texttt{warmup-time} applying the sliding window average (windowSize = 10000) to the mean end-to-end delay values obtained from 20 independent repetitions of our highest value of $ \rho_{bbu} $ (0.9). The same reasoning will be applied to the next simulations.
+We have estimated the \texttt{warmup-time} applying the sliding window average (i.e. windowSize = 10000) to the end-to-end delay values obtained from 20 independent repetitions of our highest value of $ \rho_{bbu} $ (0.9). The same method will be applied to every simulation.
 
-In Figure~\ref{fig:warm-up-study} it is shown that a good value for \texttt{warmup-time} is around 50000 seconds, where the initial transient is over and the steady state is reached. 
+In Figure~\ref{fig:warm-up-study} it is shown that, in this illustrative case, a good value for \texttt{warmup-time} is around 50000 seconds, where the initial transient is over and the steady state is reached. 
 
 The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics (i.e. 2 days of simulation time).
 
 \section{Experiments}
 We will analyze separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
-We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. Futhermore, the number of RRH has to verify the stability condition computed in \ref{eq:rho-rrh}. For each case we have done 20 different repetitions for every single scenario.
+We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. For each case we have done 20 different repetitions for every single scenario.
+The number of repetitions are enough in order to have a level of 99\% confidence. 
 
 \subsection{Case A - Transmission without compression}
 In this case the end-to-end delay could depend on two factors:
@@ -231,13 +232,12 @@ In this case the end-to-end delay could depend on two factors:
 	\item \texttt{X}, chosen such as $ \rho_{bbu} $, computed as in \ref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
 	\item \texttt{N}, with prefixed values of 2, 5, 10.
 \end{itemize}
-\subsubsection{Exponential}
-Since the exponential distribution does not provide a variance control, the packet size \texttt{s}, extracted by the AS, could assume both small and large values.
 
+\subsubsection{Exponential}
 In Figure~\ref{fig:case-a-exp}, as we expected, we can see that the end-to-end delay does not depend on the number of remote radios \texttt{N} because on the RRH the service time is null, so there will be no queues and the packets will be forwarded to the cells immediately.
 
-In fact, the three different plots (2, 5 and 10 RRHs) overlap perfectly.
-Hence, the end-to-end delay corresponds only to the BBU response time, so the only factor that allows us to minimize the end-to-end delay is the BBU transmission speed \texttt{X}.
+In fact, the three different plots (i.e. 2, 5 and 10 RRHs) overlap perfectly.
+Hence, the end-to-end delay corresponds only to the BBU response time and the only factor that characterize the end-to-end delay is the BBU transmission speed \texttt{X}.
 
 
 %\begin{align}
@@ -245,9 +245,9 @@ Hence, the end-to-end delay corresponds only to the BBU response time, so the on
 %&= E[W_{bbu}] + \frac{1}{\mu_{bbu}} \notag \\
 %\end{align}
 \subsubsection{Lognormal}
-In the lognormal scenario, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution. For this reason the end-to-end delay (shown in Figure~\ref{fig:case-a-log}) tends to be higher than the previous analysis as \texttt{X} decreases.
+In the lognormal scenario, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution, since the latter does not provide a variance control and the size could assume both small and large values. For this reason the end-to-end delay (shown in Figure~\ref{fig:case-a-log}) has the same trend of exponential, except for the lowest value of $ \rho $ we condired, where the delay is higher than the previous analysis.
 
-Furthermore, we can notice that the confidence interval for lower values of \texttt{X} ($\rho \simeq 1$) is wider than the exponential one. This is due to the fact that the system is sensitive to an unlucky stream of packet whose size is greater than the mean size value.
+Furthermore, we can notice that the confidence interval the lowest value of \texttt{X} (i.e. $\rho = 0.9$) is wider than the exponential one. This is due to the fact that the system is sensitive to an unlucky stream of packet whose size is greater than the mean size value.
 
 
 \begin{figure}
@@ -270,10 +270,9 @@ Furthermore, we can notice that the confidence interval for lower values of \tex
 
 Of course, also in this case, the only meaningful scalable factor is the BBU transmission speed.
 \bigbreak
-\noindent The data for both distributions have been tested with a level of confidence interval of 99\%. 
 
 \subsection{Case B - Transmission with compression}
-In addition to the factors of case A, now we have a further factor to take in account: the compression percentage. Hence, the set of factors becomes:
+In addition to the factors of case A, in case B we have a further factor to take in account: the compression percentage. Hence, the set of factors becomes:
 
 \begin{itemize}
 	\item \texttt{X}, that will assume the same values of case A, but we have to consider that now $ \rho_{bbu} $ depends on the compression percentage because of the smaller number of bytes transmitted. We have chosen these values for the sake of a correct comparison between the two cases.
@@ -282,7 +281,7 @@ In addition to the factors of case A, now we have a further factor to take in ac
 \end{itemize}
 
 \subsubsection{Exponential}
-According to inequality expressed in \ref{eq:rho-rrh}, $ \rho_{rrh} $ does not depend on \texttt{X}, thus, we can fix the BBU speed (i.e. 1000 bytes/s) and compare the waiting times obtained from the variations of \texttt{N} and \texttt{C}. In Figure~\ref{fig:c-vs-waiting-1} we can see the waiting time trend for compression values up to 90\% keeping in mind that we need at least 4 RRHs in order to satisfy the stability condition.
+According to inequality expressed in \ref{eq:rho-rrh}, $ \rho_{rrh} $ does not depend on \texttt{X}, thus, we can fix the BBU speed (i.e. 1000 bytes/s) and compare the waiting times obtained from the variations of \texttt{N} and \texttt{C}. In Figure~\ref{fig:c-vs-waiting-1}, we can see the waiting time trend for compression values up to 90\% keeping in mind that we need at least 4 RRHs in order to satisfy the stability condition.
 
 \begin{figure}
 \centering
@@ -302,9 +301,9 @@ According to inequality expressed in \ref{eq:rho-rrh}, $ \rho_{rrh} $ does not d
 \label{fig:waiting-and-delay}
 \end{figure}
 
-As the number of RRHs increases, the waiting time tends to be constant around zero becoming independent from the compression percentage.
+As the number of RRHs increases, the waiting time tends to be constant around zero becoming independent from the compression percentage. 
 
-Hence, for this consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a negligible waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change (Figure~\ref{fig:c-vs-delay}).
+For this consideration, we can fix the number of RRH to an high value (i.e. 20) in order to have a negligible waiting time on the RRHs, and see how the end-to-end delay varies as BBU speed and compression percentage change (Figure~\ref{fig:c-vs-delay}).
 
 \begin{figure}[b]
 \centering
@@ -324,7 +323,7 @@ Hence, for this consideration, we can fix the number of RRH to an high value (i.
 \label{fig:waiting-and-delay-2}
 \end{figure}
 
-As the speed increases (i.e. from 1111 bytes/s), the end-to-end delay tends to become a monotonically increasing function and it is not convenient to use higher compressions. Furthermore, also in this experiment where the waiting time on the RRH is negligible, for none of the BBU speeds taken into consideration there are not any advantages in setting the compression percentage over 50\%. For this reason, from now on, we will consider the compression percentage with values ranging from 10\% to 50\% allowing us to reach the stability condition even for 2 and 3 RRHs (Figure~\ref{fig:c-vs-waiting-2}).
+As the speed increases (i.e. from 1111 bytes/s), the end-to-end delay tends to become a monotonically increasing function and it is not convenient to use higher compressions. Furthermore, even in this experiment where the waiting time on the RRH is negligible, we can see that, considering these BBU speeds, the maximum compression value where we have higher benefits corresponds to 50\%. For this reason, from now on, we will consider the compression percentage with values ranging from 10\% to 50\% allowing us to reach the stability condition even for 2 and 3 RRHs (Figure~\ref{fig:c-vs-waiting-2}).
 
 Now we want to analyze the system with 2 RRHs, when we have the highest RRH waiting time, to see whether, with low BBU speeds, we still have advantages in increasing the compression percentage (Figure~\ref{fig:worst-case}).
 
@@ -362,7 +361,7 @@ Figure~\ref{fig:c-vs-delay-741} shows that the value of \texttt{C}, that minimiz
 \newpage
 
 \subsubsection{Lognormal}
-As we have seen in case A, for $\rho \simeq 1$ (in our case \texttt{X}=741bytes/s), the end-to-end delay, which is affected only by the BBU response time, assumed very high values and suffered a large variance. In case B we will not have anymore this situation due to the fact that the BBU transmits less bytes depending on \texttt{C}. Considering that $\rho_{bbu}$ is computed as in \ref{eq:rho-bbu} and \texttt{s} is reduced by \texttt{C}, its value (for equal \texttt{X} of case A) will be lower and consequently the BBU will stabilize first (Figure~\ref{fig:c-vs-resp-741-logn}).
+As we have seen in case A, for $\rho \simeq 1$ (in our case \texttt{X}=741bytes/s), the end-to-end delay, which is affected only by the BBU response time, assumes very high values and suffers a large variance. In case B we will not have anymore this situation due to the fact that the BBU transmits less bytes depending on \texttt{C}. Considering that $\rho_{bbu}$ is computed as in \ref{eq:rho-bbu} and \texttt{s} is reduced by \texttt{C}, its value (for equal \texttt{X} of case A) will be lower and consequently the BBU will stabilize first (Figure~\ref{fig:c-vs-resp-741-logn}).
 
 \begin{figure}[h]
 	\centering
@@ -371,9 +370,9 @@ As we have seen in case A, for $\rho \simeq 1$ (in our case \texttt{X}=741bytes/
 	\label{fig:c-vs-resp-741-logn}
 \end{figure}
 
-By Burke's theorem the lognormal distribution will affect only the BBU statistics, that are similar to the exponential ones (Figure~\ref{fig:c-vs-response-time-bbu}). As the RRHs behavior will not be affected by a different distribution, the two configurations of the system gave similar trends. 
+By Burke's theorem the lognormal distribution will affect only the BBU statistics, even if, by Figure~\ref{fig:c-vs-response-time-bbu}, we can see that they are similar to the exponential ones. As the RRHs behavior will not be affected by a different distribution, the two configurations of the system gave similar trends. 
 
-When $\rho_{bbu}$ goes up the performance of the lognormal distribution is worse than the exponential one, instead for lower values of $\rho_{bbu}$ we have a slightly increased performance. However, due to the trends redundancy, for the lognormal distribution we can refer to the exponential study.
+When $\rho_{bbu}$ goes up the performance of the lognormal distribution is worse than the exponential one, instead for lower values of $\rho_{bbu}$ we have a slightly increased performance. %However, due to the trends redundancy, for the lognormal distribution we can refer to the exponential study.
 
 \begin{figure}[h]
 	\centering
@@ -405,7 +404,7 @@ The main objective of this study is to establish when and with which compression
 \end{figure}
 
 For a certain \texttt{X} value onward, in our case 1111 bytes/s, we will not have any benefits in using this compression algorithm because the time saved in transmitting lower number of bytes is not rewarded by the longer time spent on the RRH.
-On the other hand, below this \texttt{X} value, the compression increases the performance. 
+On the other hand, below this \texttt{X} value, the compression improves the performance. 
 
 From Figure~\ref{fig:c-vs-delay-comparison} we can only estimate an interval of \texttt{C} where we obtain the lower delay for a given \texttt{X}; for the exponential distribution we could obtain a more accurate value studying the following inequality, remembering that the RRH response time is null when there is no compression:
 
