@@ -152,10 +152,16 @@ Note that the steady state probability on each RRH and on the BBU is equal to an
 
 \subsection{Statistics for validation}
 In order to validate our model we have used the following perfomance indexes taken from the queueing theory:
+\begin{equation}
+E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s} \qquad E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} =  \frac{s \cdot t}{X \cdot t - s}
+\label{eq:response-time-bbu}
+\end{equation}
+\begin{equation}
+E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N - C \cdot k} \qquad E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} = \frac{C \cdot k \cdot t \cdot N}{t \cdot N - C \cdot k}
+\label{eq:response-time-rrh}
+\end{equation}
 
-$$ E[N_{bbu}] = \frac{\rho_{bbu}}{1 - \rho_{bbu}} = \frac{s}{X \cdot t - s} \qquad E[R_{bbu}] = \frac{E[N_{bbu}]}{\lambda_{bbu}} =  \frac{s \cdot t}{X \cdot t - s}$$
 
-$$ E[N_{rrh}] = \frac{\rho_{rrh}}{1 - \rho_{rrh}} = \frac{C \cdot k}{t \cdot N - C \cdot k} \qquad E[R_{rrh}] = \frac{E[N_{rrh}]}{\lambda_{rrh}} = \frac{C \cdot k \cdot t \cdot N}{t \cdot N - C \cdot k}$$
 
 The successful comparison between these equations and the simulator results assure us that we are working on a correct model for our system.
 
@@ -276,11 +282,27 @@ In addition to the factors of case A, in case B we have a further factor to take
 
 \begin{itemize}
 	\item \texttt{X}, that will assume the same values of case A, but we have to consider that now $ \rho_{bbu} $ depends on the compression percentage because of the smaller number of bytes transmitted. We have chosen these values for the sake of a correct comparison between the two cases.
-	\item \texttt{N}, with values ranging from 2 to 50.
-	\item \texttt{C}, with values ranging from 10 to 90.
+	\item \texttt{C}, with values ranging from 10 to 90. 
+	\item \texttt{N}, with values ranging from 4 to 30. These bounds have been set in order to have $\rho_{rrh}$ values ranging from 0.1 to 0.9 for \texttt{C} equal to 90\%, maximum workload on the RRHs, considering that $\texttt{N} \propto \frac{C}{\rho_{rrh}}$.	
 \end{itemize}
 
+
 \subsubsection{Exponential}
+By Burke's theorem consequences we can assert that the response time of the whole system can be studied splitting it into the BBU and RRH response times:
+\begin{equation}
+E[R] = E[R]_{bbu} + E[R]_{rrh}
+\end{equation} 
+As we can see in \ref{eq:response-time-bbu} the mean BBU response time does not depend on \texttt{N}, hence we can analyze its behavior in relation to \texttt{C} and \texttt{X}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/c-vs-response-time-bbu-exp}
+	\caption{BBU response time in relation to \texttt{C} and \texttt{X}}
+	\label{fig:c-vs-response-time-bbu}
+\end{figure}
+As we expected, as \texttt{C} goes up the BBU response time decreases because it transmits a lower number of bytes. For slower speeds the benefits obtained through compression are valuable. On the other hand when \texttt{X} is high there are almost no differences in having high or low compression percentage. %The resulting delay reduction in compressing at \texttt{X} = 6667 bytes/s is only the 2\% of the reduction at \texttt{X} = 741 bytes/s.%
+From another point of view, as \texttt{C} increases, \texttt{X} becomes less and less influential to the point that, for \texttt{C} equal to 90\%, becomes completely irrelevant.\\
+In the same way the mean RRH response time does not depend on 
+
 According to inequality expressed in \ref{eq:rho-rrh}, $ \rho_{rrh} $ does not depend on \texttt{X}, thus, we can fix the BBU speed (i.e. 1000 bytes/s) and compare the waiting times obtained from the variations of \texttt{N} and \texttt{C}. In Figure~\ref{fig:c-vs-waiting-1}, we can see the waiting time trend for compression values up to 90\% keeping in mind that we need at least 4 RRHs in order to satisfy the stability condition.
 
 \begin{figure}
@@ -374,23 +396,6 @@ By Burke's theorem the lognormal distribution will affect only the BBU statistic
 
 When $\rho_{bbu}$ goes up the performance of the lognormal distribution is worse than the exponential one, instead for lower values of $\rho_{bbu}$ we have a slightly increased performance. %However, due to the trends redundancy, for the lognormal distribution we can refer to the exponential study.
 
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/c-vs-response-time-bbu-exp}
-		\caption{Exponential distribution}
-		\label{fig:c-vs-response-time-bbu-exp}
-	\end{subfigure}%
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/c-vs-response-time-bbu-logn}
-		\caption{Lognormal distribution}
-		\label{fig:c-vs-response-time-bbu-logn}
-	\end{subfigure}
-	\caption{BBU response time in relation to \texttt{C} and \texttt{X}}
-	\label{fig:c-vs-response-time-bbu}
-\end{figure}
 
 \subsection{Comparison}
 
