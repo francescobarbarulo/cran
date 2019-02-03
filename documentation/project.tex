@@ -228,8 +228,8 @@ In Figure~\ref{fig:warm-up-study} it is shown that, in this illustrative case, a
 The value for the \texttt{simulation-time-limit} has been chosen in order to have enough results for statistics (i.e. 2 days of simulation time).
 
 \section{Experiments}
-We will analyze separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
-We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyze. For each case we have done 20 different repetitions for every single scenario.
+We will analyse separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
+We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyse. For each case we have done 20 different repetitions for every single scenario.
 The number of repetitions are enough in order to have a level of 99\% confidence. 
 
 \subsection{Case A - Transmission without compression}
@@ -292,7 +292,7 @@ By Burke's theorem consequences we can assert that the response time of the whol
 \begin{equation}
 E[R] = E[R]_{bbu} + E[R]_{rrh}
 \end{equation} 
-As we can see in \ref{eq:response-time-bbu}, the mean BBU response time does not depend on \texttt{N}, hence we can analyze its behavior in relation to \texttt{C} and \texttt{X}.
+As we can see in \ref{eq:response-time-bbu}, the mean BBU response time does not depend on \texttt{N}, hence we can analyse its behaviour in relation to \texttt{C} and \texttt{X}.
 
 \begin{figure}[h]
   \centering
@@ -315,7 +315,7 @@ As we can see in \ref{eq:response-time-bbu}, the mean BBU response time does not
 As we expected, as \texttt{C} goes up, the BBU response time decreases because it transmits a lower number of bytes and for slower speeds the benefits obtained through compression are valuable. On the other hand when \texttt{X} is high there are almost no differences in having high or low compression percentage. %The resulting delay reduction in compressing at \texttt{X} = 6667 bytes/s is only the 2\% of the reduction at \texttt{X} = 741 bytes/s.%
 From another point of view, as \texttt{C} increases, \texttt{X} becomes less and less influential to the point that, for \texttt{C} equal to 90\%, becomes completely irrelevant.
 
-In the same way the mean RRH response time does not depend on \texttt{X}, hence we can analyze its behavior in relation to \texttt{C} and \texttt{N}.
+In the same way the mean RRH response time does not depend on \texttt{X}, hence we can analyse its behaviour in relation to \texttt{C} and \texttt{N}.
 As \texttt{C} goes down, the RRH response time decreases because the service time is faster and the number of RRHs tends to be irrelevant. Otherwise, for high values of \texttt{C}, the longer service time needed gains more benefits from an high \texttt{N} because of the workload uniform redistribution, as shown in Figure~\ref{fig:response-time-rrh-ratio}.
 The main limiting factor on the RRHs is the decompression algorithm used, which has complexity O(1) because, at the same \texttt{C}, it will always take the same time $ S $, regardless of the packet size to decompress.
 
@@ -337,7 +337,7 @@ The main limiting factor on the RRHs is the decompression algorithm used, which 
 \label{fig:response-time-rrh-ratio}
 \end{figure}
 
-While the BBU response time decreases as \texttt{C} increases, the RRH response time behaves in the opposite way. For this reason we can not assert a priori whether increasing or decreasing \texttt{C} brings advantages to the system, so we have to analyze when the benefits taken from the size reduction on the BBU are greater than the damages brought by RRH service time. Hence, we need a global view of the system through the end-to-end delay analysis, fixing factors at representative values.
+While the BBU response time decreases as \texttt{C} increases, the RRH response time behaves in the opposite way. For this reason we can not assert a priori whether increasing or decreasing \texttt{C} brings advantages to the system, so we have to analyse when the benefits taken from the size reduction on the BBU are greater than the damages brought by RRH service time. Hence, we need a global view of the system through the end-to-end delay analysis, fixing factors at representative values.
 
 %The benefits taken from the size reduction on the BBU are in whole or in part balanced by the damages brought by RRH service time.
 
@@ -365,7 +365,7 @@ First of all we fix \texttt{N} equal to 30 because, as we have already seen from
 
 As we can see from Figure~\ref{fig:c-vs-delay-n-30}, for every considered speed values, we do not have any advantages in using compression over 50\%, because we have already crossed the point of maximum gain. 
 % DIRE CHE ANCHE CON PIù PICCOLO N NON HA UN UNTILIZZAZIONE MAGGIORE DEL 40%
-Moreover, from Figure~\ref{fig:s-vs-delay-n-30}, for speeds over about 1000 bytes/s, the end-to-end delay decreases as \texttt{C} decreases. For this reason we will analyze, in more details with a compression range from 10\% to 50\%, the remaining speeds whose behavior is not defined yet.
+Moreover, from Figure~\ref{fig:s-vs-delay-n-30}, for speeds over about 1000 bytes/s, the end-to-end delay decreases as \texttt{C} decreases. For this reason we will analyse, in more details with a compression range from 10\% to 50\%, the remaining speeds whose behaviour is not defined yet.
 
 \begin{figure}[h]
 \centering
@@ -399,39 +399,33 @@ We can notice that for every speed the best compression is worth regardless the 
 At the end, the main factor on which the system depends is the combination between speed and compression percentage.
 
 \subsubsection{Lognormal}
-As we have seen in case A, for $\rho \simeq 1$ (in our case \texttt{X} equal to 741bytes/s), the end-to-end delay, which is affected only by the BBU response time, assumes very high values and suffers a large variance. In case B we will not have anymore this situation due to the fact that the BBU transmits less bytes depending on \texttt{C}. Considering that $\rho_{bbu}$ is computed as in \ref{eq:rho-bbu} and \texttt{s} is reduced by \texttt{C}\%, its value (for equal \texttt{X} of case A) will be lower and consequently the BBU will stabilize first (Figure~\ref{fig:c-vs-resp-741-logn}).
+As we have seen in case A, for $\rho \simeq 1$ (in our case \texttt{X} equal to 741bytes/s), the end-to-end delay, which is affected only by the BBU response time, assumes very high values and suffers a large variance. In case B we will not have anymore this situation due to the fact that the BBU transmits less bytes depending on \texttt{C}. Considering that $\rho_{bbu}$ is computed as in \ref{eq:rho-bbu} and \texttt{s} is reduced by \texttt{C}\%, its value (for equal \texttt{X} of case A) will be lower and the BBU will stabilize first.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.5\textwidth]{images/response-time-bbu-741-logn}
-	\caption{BBU response time lognormal distribution in relation to \texttt{C}, with \texttt{X}=741bytes/s}
-	\label{fig:c-vs-resp-741-logn}
-\end{figure}
 
 A different distribution for packet size affects only the BBU service time beacuse our system respects Burke's theorem. The RRHs will behave in the same way of the exponential distribution case. Hence, it is sufficient to study the BBU response time with packet size taken from the lognormal distribution.
+
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}{.5\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/c-vs-delay-n-30}
+		\includegraphics[width=\linewidth]{images/bbu-exp}
 		\caption{Exponential}
 		\label{fig:exponential-bbu-response}
 	\end{subfigure}%
 	\begin{subfigure}{.5\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/s-vs-delay-n-30}
+		\includegraphics[width=\linewidth]{images/bbu-logn}
 		\caption{Lognormal}
 		\label{fig:lognormal-bbu-response}
 	\end{subfigure}
 	\caption{BBU response time}
 	\label{fig:bbu-response}
 \end{figure}
-When $\rho_{bbu}$ goes up the performance of the lognormal distribution is worse than the exponential one, instead for lower values of $\rho_{bbu}$ we have slightly shorter response times. Given the performance similarity of the two response times and the RRH behavior independence from the BBU, we can assert that the lognormal case behaves as the exponential one and the same considerations will apply for both. %However, due to the trends redundancy, for the lognormal distribution we can refer to the exponential study.
-
+When $\rho_{bbu}$ goes up the performance of the lognormal distribution is worse than the exponential one, instead for lower values of $\rho_{bbu}$ we have slightly shorter response times. Given the performance similarity of the two response times and the RRH behaviour independence from the BBU, we can assert that the insights made for the exponential case are valid for the lognormal case too.
 
 \subsection{Comparison}
-
-The main objective of this study is to establish when and with which compression percentage we can have lower values of the end-to-end delay. As we have seen, for \texttt{C} equal to 0, \texttt{N} is irrelevant for the puposes of the end-to-end delay study, and in Figure~\ref{fig:c-vs-delay-741} is shown that for \texttt{N} greater than 5 the delay behaviors tends to comply. Hence for the comparison study we fix \texttt{N} equal to 5. 
+In case B we took for granted that the system uses a packet compression algorithm, and we analysed which was the optimum compression range for a given speed. Now we take in account the possibility to compress or not. First, we show the worst case analysis from the RRH point of view because if it is convenient to compress at the worst case, it will be also for the better cases. We took 4 RRHs as our worst case because, as we have seen in Figure
+~\ref{fig:c-vs-response-time-rrh}, in case of compression with 4 RRHs we have higher delays.
 
 \begin{figure}[h]
 	\centering
@@ -455,13 +449,13 @@ For example, with \texttt{X} = 741 bytes/s, from the graph we can estimate the b
 
 \newpage
 \section{Conclusions}
-This project analyzed a CRAN system which can adopt a compression/decompression algorithm whose compression time is null and decompression time depends on the percentage adopted.\\
+This project analysed a CRAN system which can adopt a compression/decompression algorithm whose compression time is null and decompression time depends on the percentage adopted.\\
 Thus we studied the trend of the mean end-to-end delay in relation to \texttt{C}: 
 \begin{itemize}
 	\item For lower values of \texttt{C} it is more convenient increasing \texttt{X} instead of \texttt{N}. Indeed, for $\texttt{C} = 0 $ the number of remote radios is irrelevant.
 	\item For high values of \texttt{C} it is more convenient increasing \texttt{N} instead of \texttt{X}. This is true for \texttt{N} up to 20, after that increasing the number of remote radios brings meaningless improvements.
 \end{itemize}
-For the range of analyzed values, the benefits brought by compression can be appreciated only at lower BBU transmission speeds where the time gained by size reduction is greater than the time spent on the RRH because of decompression. Increasing the number of RRH, thus decreasing the workload on them, the value of \texttt{C}, that gives the shortest end-to-end delay, increases.
+For the range of analysed values, the benefits brought by compression can be appreciated only at lower BBU transmission speeds where the time gained by size reduction is greater than the time spent on the RRH because of decompression. Increasing the number of RRH, thus decreasing the workload on them, the value of \texttt{C}, that gives the shortest end-to-end delay, increases.
 
 
 
