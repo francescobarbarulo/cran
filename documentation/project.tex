@@ -230,7 +230,7 @@ The value for the \texttt{simulation-time-limit} has been chosen in order to hav
 \section{Experiments}
 We will analyse separately the two cases described in Section~\ref{sec:introduction} either with exponential and lognormal distribution, the latter only for the packet size.
 We will take in account scenarios with at least 2 remote radios, because a system with only one remote radio is not interesting to analyse. For each case we have done 20 different repetitions for every single scenario.
-The number of repetitions are enough in order to have a level of 99\% confidence. 
+The number of repetitions are enough in order to have a 99\% confidence level. 
 
 \subsection{Case A - Transmission without compression}
 In this case the end-to-end delay could depend on two factors:
@@ -274,14 +274,11 @@ Furthermore, we can notice that the confidence interval the lowest value of \tex
 \label{fig:case-a}
 \end{figure}
 
-Of course, also in this case, the only meaningful scalable factor is the BBU transmission speed.
-\bigbreak
-
 \subsection{Case B - Transmission with compression}
 In addition to the factors of case A, in case B we have a further factor to take in account: the compression percentage. Hence, the set of factors becomes:
 
 \begin{itemize}
-	\item \texttt{X}, that will assume the same values of case A, but we have to consider that now $ \rho_{bbu} $ depends on the compression percentage because of the smaller number of bytes transmitted. We have chosen these values for the sake of a correct comparison between the two cases.
+	\item \texttt{X}, that will assume the same values of case A, but we have to consider that, in this case, $ \rho_{bbu} $ depends on the compression percentage because of the smaller number of bytes transmitted. We have chosen these values for the sake of a correct comparison between the two cases.
 	\item \texttt{C}, with values ranging from 10 to 90. 
 	\item \texttt{N}, with values ranging from 4 to 30. These bounds have been set in order to have $\rho_{rrh}$ values ranging from 0.1 to 0.9 for \texttt{C} equal to 90\%, maximum workload on the RRHs, considering that $\texttt{N} \propto \frac{C}{\rho_{rrh}}$.	
 \end{itemize}
