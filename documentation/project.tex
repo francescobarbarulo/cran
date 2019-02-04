@@ -141,7 +141,7 @@ $$ \mu_{rrh} = \frac{1}{C \cdot k}, \quad k = 50ms $$
 \rho_{rrh} = \frac{\lambda_{rrh}}{\mu_{rrh}} = \frac{C \cdot k}{t \cdot N} < 1
 \end{equation}
 
-Hence, using the result obtained in \ref{eq:rho-bbu}, the final stability condition for case B is:
+Hence, using the result obtained in \eqref{eq:rho-bbu}, the final stability condition for case B is:
 
 $$ \begin{cases} \rho_{bbu} = \frac{s}{t \cdot X} < 1 \\ \\ \rho_{rrh} = \frac{C \cdot k}{t \cdot N} < 1 \end{cases} $$
 
@@ -237,7 +237,7 @@ The number of repetitions are enough in order to have a 99\% confidence level.
 \subsection{Case A - Transmission without compression}
 In this case the end-to-end delay could depend on two factors:
 \begin{itemize}
-	\item \texttt{X}, chosen such as $ \rho_{bbu} $, computed as in \ref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
+	\item \texttt{X}, chosen such as $ \rho_{bbu} $, computed as in \eqref{eq:rho-bbu}, will assume values from 0.1 to 0.9 increased by 0.1;
 	\item \texttt{N}, with prefixed values of 2, 5, 10.
 \end{itemize}
 
@@ -253,9 +253,9 @@ Hence, the end-to-end delay corresponds only to the BBU response time and the on
 %&= E[W_{bbu}] + \frac{1}{\mu_{bbu}} \notag \\
 %\end{align}
 \subsubsection{Lognormal}
-In the lognormal scenario, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution. In the latter the size could assume both small and large values since it does not provide a variance control. For this reason the end-to-end delay (shown in Figure~\ref{fig:case-a-log}) has the same trend of exponential, except for the lowest value of $ \rho $ we considered, where the delay is higher than the previous analysis.
+In the lognormal scenario, the probability to have packet size values greater than the mean value is higher with respect to the exponential distribution. In the latter the size could assume both small and large values since it does not provide a variance control. For this reason the end-to-end delay (shown in Figure~\ref{fig:case-a-log}) has the same trend of exponential, except for the lowest value of $ \rho_{bbu} $ we considered, where the delay is higher than the previous analysis.
 
-Furthermore, we can notice that the confidence interval the lowest value of \texttt{X} (i.e. $\rho = 0.9$) is wider than the exponential one. This is due to the fact that the system is sensitive to an unlucky stream of packet whose size is greater than the mean size value.
+Furthermore, we can notice that the confidence interval at the lowest value of \texttt{X} (i.e. $\rho_{bbu} = 0.9$) is wider than the exponential one. This is due to the fact that the system is sensitive to an unlucky stream of packet whose size is greater than the mean size value.
 
 
 \begin{figure}
@@ -309,7 +309,7 @@ By Burke's theorem consequences we can assert that the response time of the whol
 \begin{equation}
 E[R] = E[R]_{bbu} + E[R]_{rrh}
 \end{equation} 
-As we can see in \ref{eq:response-time-bbu}, the mean BBU response time does not depend on \texttt{N}, hence we can analyse its behaviour in relation to \texttt{C} and \texttt{X}.
+As we can see in \eqref{eq:response-time-bbu}, the mean BBU response time does not depend on \texttt{N}, hence we can analyse its behaviour in relation to \texttt{C} and \texttt{X}.
 As we expected, as \texttt{C} goes up, the BBU response time decreases because it transmits a lower number of bytes and for slower speeds the benefits obtained through compression are valuable. On the other hand when \texttt{X} is high there are almost no differences in having high or low compression percentage. %The resulting delay reduction in compressing at \texttt{X} = 6667 bytes/s is only the 2\% of the reduction at \texttt{X} = 741 bytes/s.%
 From another point of view, as \texttt{C} increases, \texttt{X} becomes less and less influential to the point that, for \texttt{C} equal to 90\%, becomes completely irrelevant.
 \begin{figure}[H]
@@ -389,7 +389,7 @@ This trend confirm that as speed decreases, the gain on the BBU given by the bes
 For these values of \texttt{C} the number of remote radios is almost irrelevant as we have seen in Figure~\ref{fig:c-vs-response-time-rrh}.
 
 \subsubsection{Lognormal}
-In case A, for $\rho \simeq 1$ (in our case \texttt{X} equal to 741 bytes/s), the end-to-end delay, which is affected only by the BBU response time, assumes very high values and suffers a large variance. In case B we will not have anymore this situation due to the fact that the BBU transmits less bytes depending on \texttt{C}. Considering that $\rho_{bbu}$ is computed as in \ref{eq:rho-bbu} and \texttt{s} is reduced by \texttt{C}\%, its value (for equal \texttt{X} of case A) will be lower and the BBU will stabilize first.
+In case A, for $\rho_{bbu} \simeq 1$ (in our case \texttt{X} equal to 741 bytes/s), the end-to-end delay, which is affected only by the BBU response time, assumes very high values and suffers a large variance. In case B we will not have anymore this situation due to the fact that the BBU transmits less bytes depending on \texttt{C}. Considering that $\rho_{bbu}$ is computed as in \eqref{eq:rho-bbu} and \texttt{s} is reduced by \texttt{C}\%, its value (for equal \texttt{X} of case A) will be lower and the BBU will stabilize first.
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}{.5\textwidth}
