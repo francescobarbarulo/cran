@@ -52,7 +52,7 @@ simtime_t cranMessage::getRrhArrivalTime(){
 // features
 
 void cranMessage::compressPkt(int percentage){
-    this->size = this->size * ((100.0 - percentage)/100.0) + 1;
+    this->size = ceil(this->size * ((100.0 - percentage)/100.0));
     this->compression = percentage;
     EV << "compressed packet by: " << this->compression << " - new size: " << this->size << endl;
 }

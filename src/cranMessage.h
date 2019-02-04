@@ -2,6 +2,7 @@
 #define CRANMESSAGE_H_
 
 #include <omnetpp.h>
+#include <math.h>
 
 using namespace omnetpp;
 

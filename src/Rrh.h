@@ -25,7 +25,6 @@ class Rrh : public cSimpleModule
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
     virtual void finish();
-    simtime_t getDecompressionTime();
     void startDecompression();
 };
 

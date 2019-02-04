@@ -19,8 +19,6 @@ simple Rrh
 {
    	parameters:
    	    double timePerCompressionUnit = default(0.05);
-   	    bool dependentDecompressionTime = default(false);
-   	    double decompressionSpeed = default(1000);
    	    // signals
    	      	    
    	    @signal[responseTime](type=long);

@@ -2,14 +2,6 @@
 
 Define_Module(Rrh);
 
-simtime_t Rrh::getDecompressionTime(){
-    // Compression time does not depend on packet size
-    if (!par("dependentDecompressionTime").boolValue())
-        return this->server->getCompression()*par("timePerCompressionUnit").doubleValue();
-    // Compression time does depend on packet size
-    return this->server->getSize()/par("decompressionSpeed").doubleValue();
-}
-
 void Rrh::initialize()
 {
     this->beep = new cMessage();
@@ -59,7 +51,7 @@ void Rrh::startDecompression(){
     // !! waiting time expired !!
     emit(this->waitingTimeSignal, simTime() - this->server->getRrhArrivalTime());
 
-    simtime_t decompressionTime = this->getDecompressionTime();
+    simtime_t decompressionTime = this->server->getCompression()*par("timePerCompressionUnit").doubleValue();
     scheduleAt(simTime() + decompressionTime , this->beep);
     EV<<"[RRH] decompressionTime: "<< decompressionTime <<endl;
 }
