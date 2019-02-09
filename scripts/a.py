@@ -43,13 +43,18 @@ def main():
 				print 'Cannot read %s' % filename
 				sys.exit()
 
-		plt.errorbar(speed, y, yerr=yerr, fmt="-*", markeredgecolor='red', ecolor="black", capsize=4, linewidth=1)
+		print y
+
+		plt.errorbar(speed, y, yerr=yerr, fmt="-*", markeredgecolor='red', capsize=4, linewidth=1)
 
 
-	plt.xlabel('BbuSpeed (bytes/s)')
+	plt.xlabel('Bbu speed (bytes/s)')
 	plt.ylabel('Delay (s)')
+	plt.yscale('log')
+	plt.yticks([1, 10, 100, 1000])
+	plt.legend(numberOfRrh, title='Number of Rrhs')
 	plt.grid(linestyle='--')
-	plt.show()
+	#plt.show()
 
 
 if __name__ == "__main__":

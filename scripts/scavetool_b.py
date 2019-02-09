@@ -12,26 +12,28 @@ def parseCommand():
 
 	return sys.argv[2], sys.argv[4]
 
-def main():
-	name, const = parseCommand()
+def getFactors(const):
 	speed = [6667, 3333, 2222, 1667, 1333, 1111, 952, 833, 741]
-	#compression = [10, 30, 50, 70, 90]
-	compression = [0, 10, 30, 50]
-	#numberOfRrh = [2, 3, 4, 5, 6, 10, 20, 30, 50]
-	numberOfRrh = [2, 3, 4, 5, 6, 10]
+	compression = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+	numberOfRrh = [4, 5, 6, 7, 8, 9, 10, 20, 30]
 
 	if const == 's':
-		for n in numberOfRrh:
-			for c in compression:
-				os.system('scavetool x ../simulations/results/'+name+'-' + str(n) + ',' + str(c) + '-*.sca -o ../csv/'+name+'-' + str(n) + '-' + str(c) +'.csv')
+		return numberOfRrh, compression
+
 	elif const == 'n':
-		for s in speed:
-			for c in compression:
-				os.system('scavetool x ../simulations/results/'+name+'-' + str(s) + ',' + str(c) + '-*.sca -o ../csv/'+name+'-' + str(s) + '-' + str(c) +'.csv')
-	else:
-		for s in speed:
-			for n in numberOfRrh:
-				os.system('scavetool x ../simulations/results/'+name+'-' + str(s) + ',' + str(n) + '-*.sca -o ../csv/'+name+'-' + str(s) + '-' + str(n) +'.csv')
+		return speed, compression
+
+	return speed, numberOfRrh
+
+
+def main():
+	name, const = parseCommand()
+
+	x, y = getFactors(const)
+
+	for i in x:
+		for j in y:
+			os.system('scavetool x ../simulations/results/'+name+'-' + str(i) + ',' + str(j) + '-*.sca -o ../csv/'+name+'-' + str(i) + '-' + str(j) +'.csv')
 
 
 if __name__ == "__main__":

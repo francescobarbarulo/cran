@@ -23,16 +23,16 @@ def parseCommand():
 def setAxes(const):
 	speed = [741, 833, 952, 1111, 1333, 1667, 2222, 3333, 6667]
 	#x = [{'rho': 0.1, 'speed': 6667}, {'rho': 0.2, 'speed': 3333}, {'rho': 0.3, 'speed': 2222}, {'rho': 0.4, 'speed': 1667}, {'rho': 0.5, 'speed': 1333}, {'rho': 0.6, 'speed': 1111}, {'rho': 0.7, 'speed': 952}, {'rho': 0.8, 'speed': 833}, {'rho': 0.9, 'speed': 741}]
-	compression = [10, 20, 30, 40, 50, 70, 90]
+	compression = [10, 20, 30, 40, 50]
 	#compression = [10, 30, 50, 70, 90]
 	#numberOfRrh = [2, 3, 4, 5, 6, 10, 20, 30, 50]
-	numberOfRrh = [4, 5, 6, 7, 8, 9, 10, 20, 30, 50]
+	numberOfRrh = [4, 5, 6, 7, 8, 9, 10, 20, 30]
 
 	if const == 's':
-		return numberOfRrh, compression, 'responseTimeStat:mean', 'Compression percentage (%)', 'RRH Response Time (s)', 'Number of Rrhs'
+		return numberOfRrh, compression, 'delayStat:mean', 'numRRHs', 'Delay (s)', 'Compression (%)'
 
 	elif const == 'n':
-		return speed, compression, 'responseTimeBbuStat:mean', 'Compression percentage (%)', 'Delay (s)', 'Speeds (bytes/s)'
+		return speed, compression, 'responseTimeBbuStat:mean', 'Compression (%)', 'BBU response time (s)', 'Speeds (bytes/s)'
 
 	else:
 		return speed, numberOfRrh, 'responseTimeStat:mean', 'Number of Rrhs', 'Delay(s)', 'Speeds (bytes/s)'
@@ -70,8 +70,8 @@ def main():
 	plt.ylabel(ylabel)
 	#plt.yscale('log')
 	plt.grid(linestyle='--')
-	#plt.ylim(0, 12)
-	plt.yticks(np.arange(0, 12, 2))
+	#plt.ylim(0, 8)
+	plt.yticks(np.arange(0, 9, 2))
 	#plt.legend(line, title=legendTitle, loc=2, bbox_to_anchor=(1.05, 1), borderaxespad=0.)
 	plt.legend(line, title=legendTitle)
 	plt.show()
